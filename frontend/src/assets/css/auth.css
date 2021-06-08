@@ -1,5 +1,8 @@
 .form-group-login{
-    padding: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  color: white;
 }
 
 .form-group-login label{
@@ -42,6 +45,13 @@
     color: #8f8f8f;
 }
 
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .form-horizontal {
     position: absolute;
     top: 20vh;
@@ -51,3 +61,5 @@
 .navbar {
     box-shadow:0px 4px 3px #d3d3d3;;
 }
+
+
