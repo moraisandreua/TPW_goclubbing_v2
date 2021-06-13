@@ -1,6 +1,8 @@
 from app.models import Business, BusinessPhoto, EventPhoto, Event, Event_Type, Comment, Advertisement
 from rest_framework import serializers
-
+from rest_framework.renderers import JSONRenderer
+from drf_extra_fields.fields import Base64FileField
+import base64
 
 class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,10 +22,17 @@ class BusinessSerializer(serializers.ModelSerializer):
 
 
 class BusinessPhotoSerializer(serializers.ModelSerializer):
+    path = Base64FileField()
+
     class Meta:
         model = BusinessPhoto
         fields = ('path',
                   'business')
+
+    def create(self, validated_data):
+        path = validated_data.pop('path')
+        business = validated_data.pop('business')
+        return BusinessPhoto.objects.create(business=business, path=path)
 
 
 class EventSerializer(serializers.ModelSerializer):

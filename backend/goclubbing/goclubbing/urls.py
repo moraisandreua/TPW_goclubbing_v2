@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from app import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/business/all', views.get_all_businesses),
+    path('api/events/all', views.get_all_events),
+    path('api/business_photos/all', views.get_all_business_photos),
+    path('api/business/search', views.get_business_by_fields),
+    path('api/events/search', views.get_events_by_fields),
 ]
