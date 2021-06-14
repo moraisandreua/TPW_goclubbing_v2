@@ -22,7 +22,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/business/all', views.get_all_businesses),
     path('api/events/all', views.get_all_events),
-    path('api/business_photos/all', views.get_all_business_photos),
+    path('api/comments/all', views.get_all_comments),
+    path('api/advertisements/all', views.get_all_advertisement),
     path('api/business/search', views.get_business_by_fields),
     path('api/events/search', views.get_events_by_fields),
+    path('api/comments/search', views.get_comments_by_fields),
+    path('api/advertisements/search', views.get_advertisement_by_fields),
+    path('api/create/business', views.create_business),
+    path('api/create/event', views.create_event),
+    path('api/create/comment', views.create_comment),
+    path('api/create/advertisement', views.create_advertisement),
+
 ]

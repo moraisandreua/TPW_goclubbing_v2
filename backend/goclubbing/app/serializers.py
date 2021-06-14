@@ -1,13 +1,13 @@
 from app.models import Business, BusinessPhoto, EventPhoto, Event, Event_Type, Comment, Advertisement
 from rest_framework import serializers
-from rest_framework.renderers import JSONRenderer
 from drf_extra_fields.fields import Base64FileField
-import base64
+
 
 class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Business
-        fields = ('name',
+        fields = ('id',
+                  'name',
                   'location',
                   'address',
                   'lat',
@@ -26,7 +26,8 @@ class BusinessPhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BusinessPhoto
-        fields = ('path',
+        fields = ('id',
+                  'path',
                   'business')
 
     def create(self, validated_data):
@@ -38,7 +39,8 @@ class BusinessPhotoSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('name',
+        fields = ('id',
+                  'name',
                   'location',
                   'datetime',
                   'type',
@@ -58,14 +60,16 @@ class EventTypeSerializer(serializers.ModelSerializer):
 class EventPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventPhoto
-        fields = ('path',
+        fields = ('id',
+                  'path',
                   'event')
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('classification',
+        fields = ('id',
+                  'classification',
                   'body',
                   'event')
 
@@ -73,7 +77,8 @@ class CommentSerializer(serializers.ModelSerializer):
 class AdvertisementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advertisement
-        fields = ('event',
+        fields = ('id',
+                  'event',
                   'date',
                   'expire',
                   'body')

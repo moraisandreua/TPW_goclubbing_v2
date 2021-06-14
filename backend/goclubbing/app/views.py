@@ -1,14 +1,11 @@
 from django.shortcuts import render
 
-from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework import status
 from rest_framework.response import Response
 from app.models import Business, BusinessPhoto, Event, EventPhoto, Event_Type, Comment, Advertisement
 from app.serializers import BusinessSerializer, BusinessPhotoSerializer, EventSerializer, EventTypeSerializer, EventPhotoSerializer, CommentSerializer, AdvertisementSerializer
 from dateutil import parser
-from rest_framework.renderers import JSONRenderer
-import base64
-import json
 # Create your views here.
 
 
@@ -27,9 +24,16 @@ def get_all_events(request):
 
 
 @api_view(['GET'])
-def get_all_business_photos(request):
-    business_photos = BusinessPhoto.objects.all()
-    serializer = BusinessPhotoSerializer(business_photos, many=True)
+def get_all_comments(request):
+    comments = Comment.objects.all()
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_all_advertisement(request):
+    advertisements = Advertisement.objects.all()
+    serializer = AdvertisementSerializer(advertisements, many=True)
     return Response(serializer.data)
 
 
@@ -87,3 +91,75 @@ def get_events_by_fields(request):
 
     serializer = EventSerializer(events, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_comments_by_fields(request):
+
+    comments = Comment.objects.all()
+
+    if 'classification' in request.GET:
+        comments = comments.filter(classification__gte=request.GET['classification'])
+    if 'event' in request.GET:
+        event = Event.objects.filter(id=request.GET['event']).first()
+        comments = comments.filter(event=event)
+
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_advertisement_by_fields(request):
+
+    advertisements = Advertisement.objects.all()
+
+    if 'event' in request.GET:
+        event = Event.objects.filter(id=request.GET['event']).first()
+        advertisements = advertisements.filter(event=event)
+    if 'date' in request.GET:
+        datetime_str = request.GET['date']
+        date = parser.parse(datetime_str)
+        advertisements = advertisements.filter(date__gte=date)
+    if 'expire' in request.GET:
+        datetime_str = request.GET['expire']
+        date = parser.parse(datetime_str)
+        advertisements = advertisements.filter(expire__lt=date)
+
+    serializer = AdvertisementSerializer(advertisements, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_business(request):
+    serializer = BusinessSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def create_event(request):
+    serializer = EventSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def create_comment(request):
+    serializer = CommentSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def create_advertisement(request):
+    serializer = AdvertisementSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
