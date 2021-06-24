@@ -129,6 +129,15 @@ def get_advertisement_by_fields(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_all_business_photos(request):
+
+    business_photos = BusinessPhoto.objects.all()
+
+    serializer = BusinessPhotoSerializer(business_photos, many=True)
+    return Response(serializer.data)
+
+
 @api_view(['POST'])
 def create_business(request):
     serializer = BusinessSerializer(data=request.data)
@@ -163,3 +172,99 @@ def create_advertisement(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def update_business(request):
+    business_id = request.data['id']
+    try:
+        business = Business.objects.get(id=business_id)
+    except Business.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    serializer = BusinessSerializer(business, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def update_event(request):
+    event_id = request.data['id']
+    try:
+        event = Event.objects.get(id=event_id)
+    except Event.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    serializer = EventSerializer(event, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def update_comment(request):
+    comment_id = request.data['id']
+    try:
+        comment = Comment.objects.get(id=comment_id)
+    except Comment.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    serializer = CommentSerializer(comment, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def update_advertisement(request):
+    advertisement_id = request.data['id']
+    try:
+        advertisement = Advertisement.objects.get(id=advertisement_id)
+    except Advertisement.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    serializer = AdvertisementSerializer(advertisement, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+def del_business(request, id):
+    try:
+        business = Business.objects.get(id=id)
+    except Business.DoesNotExist:
+        return Response(stauts=status.HTTP_400_BAD_REQUEST)
+    business.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['DELETE'])
+def del_event(request, id):
+    try:
+        event = Event.objects.get(id=id)
+    except Event.DoesNotExist:
+        return Response(stauts=status.HTTP_400_BAD_REQUEST)
+    event.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['DELETE'])
+def del_comment(request, id):
+    try:
+        comment = Comment.objects.get(id=id)
+    except Comment.DoesNotExist:
+        return Response(stauts=status.HTTP_400_BAD_REQUEST)
+    comment.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['DELETE'])
+def del_advertisement(request, id):
+    try:
+        advertisement = Advertisement.objects.get(id=id)
+    except Advertisement.DoesNotExist:
+        return Response(stauts=status.HTTP_400_BAD_REQUEST)
+    advertisement.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)

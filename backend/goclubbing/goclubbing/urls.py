@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/business/all', views.get_all_businesses),
     path('api/events/all', views.get_all_events),
     path('api/comments/all', views.get_all_comments),
+    path('api/business_photos/all', views.get_all_business_photos),
     path('api/advertisements/all', views.get_all_advertisement),
     path('api/business/search', views.get_business_by_fields),
     path('api/events/search', views.get_events_by_fields),
