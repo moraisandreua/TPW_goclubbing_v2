@@ -6,10 +6,10 @@
   <div class="events">
     <div class="title">
       <h1 style="float:left;">Events </h1>
-      <a style="float:right; color: white" routerLink="dashboard_newevent" ><i class="mysmalls fa fa-plus"></i></a>
+      <a style="float:right; color: white" routerLink="dashboard/newevent" ><i class="mysmalls fa fa-plus"></i></a>
     </div>
     <div class="events-content" *ngFor="let event of events">
-      <div class="pub" *ngIf="event.fk_business == thisBusiness">
+      <div class="pub" *ngIf="event.fk_business == profile.name">
         <div>
           <p class="fa" style="font-weight: bold">{{ event.name }}</p>
           <a [routerLink]="['/dashboard/event', event.id]"><i style="color:black;" class="fa fa-pencil"></i></a>
@@ -25,13 +25,12 @@
   <div class="pubs">
     <div class="title">
       <h1 style="float: left">Ads</h1>
-      <a style="float:right; color: white" routerLink="dashboard_newad" ><i class="mysmalls fa fa-plus"></i></a>
+      <a style="float:right; color: white" routerLink="dashboard/newad" ><i class="mysmalls fa fa-plus"></i></a>
     </div>
     <div class="pubs-content" *ngFor="let ad of ads">
-      <!--{% if ad.event.business == self %}-->
-      <div class="pub">
+      <div class="pub" *ngIf="isMyEvent(ad.fk_event)">
         <div>
-          <p class="fa" style="font-weight: bold">{{ ad.fk_event }} Add</p>
+          <p class="fa" style="font-weight: bold">{{ getEvent(ad.fk_event).name}} Add</p>
           <a routerLink="[dashboard_ad' num=ad.id]"><i style="color: black;" class="fa fa-pencil"></i></a>
           <!--<p class="grey">{{ ad.expire }}</p>-->
           <p class="grey">{{ ad.body }}</p>
@@ -48,9 +47,9 @@
     </div>
     <div class="profile-content">
       <div class="profile">
-        <!--<p class="prof-text">{{ this.name }} | {{ self.type }}</p>
-        <p class="prof-text">{{ self.address }}, {{ self.location }}</p>
-        <p class="prof-text">{{ self.contact_email }} | {{ self.contact_phone }}</p>-->
+        <p class="prof-text">{{ profile.name }} | {{ profile.type }}</p>
+        <p class="prof-text">{{ profile.address }}, {{ profile.location }}</p>
+        <p class="prof-text">{{ profile.contact_email }} | {{ profile.contact_phone }}</p>
       </div>
     </div>
   </div>
@@ -58,11 +57,16 @@
     <div class="title">
       <h1>Comments</h1>
     </div>
-    <div class="comments-content" *ngFor="let comment in comments">
-      <!--{% if comment.event.business == self %}-->
-      <div class="comment">
-        <p style="font-weight: bold; margin-top: -8%; margin-left: 4%">Comment in {{ comment.event }} <a [routerLink]="['dashboard/comment/delete', comment.id]"><i style="color:black;" class="fa fa-trash"></i></a></p>
-        <!--<p style="margin-top: -13.5%; margin-left: 2.5%">{% with ''|center:comment.classification as range %} {% for n in range %} <i class="fa fa-star"></i> {% endfor %}{% endwith %}</p>-->
+    <div class="comments-content" *ngFor="let comment of comments">
+      <div class="comment" *ngIf="isMyEvent(comment.fk_event)">
+        <p style="font-weight: bold;margin-left: 4%">Comment in {{ getEvent(comment.fk_event).name }} <a [routerLink]="['dashboard/comment/delete', comment.id]"><i style="color:black;" class="fa fa-trash"></i></a></p>
+        <p style="margin-left: 2.5%">
+          <i *ngIf="comment.classification == 1 || comment.classification > 1" class="fa fa-star"></i>
+          <i *ngIf="comment.classification == 2 || comment.classification > 2" class="fa fa-star"></i>
+          <i *ngIf="comment.classification == 3 || comment.classification > 3" class="fa fa-star"></i>
+          <i *ngIf="comment.classification == 4 || comment.classification > 4" class="fa fa-star"></i>
+          <i *ngIf="comment.classification == 5 || comment.classification > 5" class="fa fa-star"></i>
+        </p>
         <p class="grey" style="margin-top: -14%; margin-left: 4%">{{ comment.body}}</p>
       </div>
     </div>
