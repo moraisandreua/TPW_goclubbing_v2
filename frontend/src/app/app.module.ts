@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DashboardHomeComponent } from './components/dashboard-home/dashboard-home.component';
 import { EventListComponent } from './components/event-list/event-list.component';
+import { AdsListComponent } from './components/ads-list/ads-list.component';
+import { CommentsListComponent } from './components/comments-list/comments-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
     DashboardHomeComponent,
-    EventListComponent
+    EventListComponent,
+    AdsListComponent,
+    CommentsListComponent
   ],
   imports: [
     BrowserModule,
