@@ -1,0 +1,41 @@
+<app-sidebar></app-sidebar>
+<div id="formus" style="width: 60vw; margin: auto; margin-left: 30vw; height: 100vh; padding-top: 7vh; padding-left: 10vw">
+  <form action="." method="post">
+    <h4 class="form-title">Add Event</h4>
+    <div class="form-group">
+      <label for="name">Name:  </label>
+      <input type="text" id="name" name="name" [(ngModel)]="event.name">
+    </div>
+    <div class="form-group">
+      <label for="location">Location:  </label>
+      <input type="text" id="location" name="location" [(ngModel)]="event.location">
+    </div>
+    <!--<div class="form-group">
+      <label for="datetime">Date and Time:  </label>
+      <input type="text" id="datetime" name="datetime" [(ngModel)]="event.datetime">
+    </div>-->
+    <div class="form-group">
+      <label for="type">Type:  </label>
+      <input type="text" id="type" name="type" [(ngModel)]="event.fk_event_type">
+
+      <label for="theme">Theme:  </label>
+      <input type="text" id="theme" name="theme" [(ngModel)]="event.theme">
+    </div>
+    <div class="form-group">
+      <label for="min_age">Minimum Age:  </label>
+      <input type="text" id="min_age" name="min_age" [(ngModel)]="event.min_age">
+    </div>
+    <div class="form-group">
+      <label for="dress_code">Dress Code:  </label>
+      <input type="text" id="dress_code" name="dress_code" [(ngModel)]="event.dress_code">
+    </div>
+    <div class="form-group">
+      <label for="organization">Organization:  </label>
+      <input type="text" id="organization" name="organization" [(ngModel)]="event.organization">
+    </div>
+    <div class="form-group col-md-offset-2 col-md-10">
+      <button type="submit" value="Save" class="btn btn-default" (click)="save(event)">Save</button>
+    </div>
+  </form>
+
+</div>

@@ -31,4 +31,19 @@ export class EventListComponent implements OnInit {
       }
     }
   }
+
+  getEventIndex(id : number) : any{
+    for(let i = 0; i < this.events.length; i++){
+      if(this.events[i].id == id){
+        return i;
+      }
+    }
+  }
+
+  delete(id : number){
+    const index: number = this.getEventIndex(id);
+    if (index !== -1) {
+      this.events.splice(index, 1);
+    }
+  }
 }

@@ -57,4 +57,19 @@ export class DashboardHomeComponent implements OnInit {
     }
   }
 
+  getCommentIndex(id : number) : any{
+    for(let i = 0; i < this.comments.length; i++){
+      if(this.comments[i].id == id){
+        return i;
+      }
+    }
+  }
+
+  delete(id : number){
+    const index: number = this.getCommentIndex(id);
+    if (index !== -1) {
+      this.comments.splice(index, 1);
+    }
+  }
+
 }

@@ -1,10 +1,10 @@
 <app-sidebar></app-sidebar>
 
-<div style="width: 80vw">
+<div style="width: 60vw; margin: auto; margin-left: 30vw; height: 100vh; padding-top: 7vh; padding-left: 10vw">
   <div>
     <h4 class="form-title" style="color:#000; margin-top: 4%;">My Advertisements</h4>
   </div>
   <ul class="list-group list-group-flush my-list" *ngFor="let ad of ads">
-    <li class="list-group-item" *ngIf="getEvent(ad.fk_event).fk_business == profile.name">Ad for {{ getEvent(ad.fk_event).name}}<a [routerLink]="['dashboard/ad/delete/', ad.id]"><i class="fa fa-trash black"></i></a><a [routerLink]="['dashboard/ad', ad.id]"><i style="float: right" class="fa fa-pencil edit-list"></i></a></li>
+    <li class="list-group-item" *ngIf="getEvent(ad.fk_event).fk_business == profile.name">Ad for {{ getEvent(ad.fk_event).name}}<a (click)="delete(ad.id)"><i class="fa fa-trash black"></i></a><a [routerLink]="['/dashboard/ad', ad.id]"><i style="float: right" class="fa fa-pencil edit-list"></i></a></li>
   </ul>
 </div>

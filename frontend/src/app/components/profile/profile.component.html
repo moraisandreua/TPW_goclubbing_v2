@@ -1,0 +1,53 @@
+<app-sidebar></app-sidebar>
+
+<div id="formus" style="width: 60vw; margin: auto; margin-left: 30vw; height: 100vh">
+  <form action="." method="post" enctype="multipart/form-data">
+    <h4 class="form-title">Edit Profile</h4>
+    <div class="form-group">
+      <!--<label for="profilePhoto">Profile Photo:  </label>
+      <input type="text" id="profilePhoto" placeholder={{profile.profilePhoto}} name="{{profile.profilePhoto}}">-->
+    </div>
+    <div class="form-group">
+      <label for="name">Name:  </label>
+      <input type="text" id="name" name="name" placeholder="{{profile.name}}" [(ngModel)]="profile.name">
+    </div>
+    <div class="form-group">
+      <label for="address">Address:  </label>
+      <input type="text" id="address" name="address" placeholder="{{profile.address}}" [(ngModel)]="profile.address">
+    </div>
+    <div class="form-group">
+      <label for="location">Location:  </label>
+      <input type="text" id="location" name="location" placeholder="{{profile.location}}" [(ngModel)]="profile.location">
+    </div>
+    <div class="form-group">
+      <label for="type">Type:  </label>
+      <input type="text" id="type" name="type" placeholder="{{profile.type}}" [(ngModel)]="profile.type">
+    </div>
+    <div class="form-group">
+      <label for="company_name">Company Name:  </label>
+      <input type="text" id="company_name" name="company_name" placeholder="{{profile.company_name}}" [(ngModel)]="profile.company_name">
+    </div>
+    <div class="form-group">
+      <!--<label for="image">Image:  </label>
+      <input type="text" id="image" name="image"[(ngModel)]="profile.image">-->
+    </div>
+    <div class="form-group">
+      <label for="contact_email">Contact Email:  </label>
+      <input type="text" id="contact_email" name="contact_email" placeholder="{{profile.contact_email}}" [(ngModel)]="profile.contact_email">
+      <label for="contact_phone">Contact Phone:  </label>
+      <input type="text" id="contact_phone" name="contact_phone" placeholder="{{profile.contact_phone}}" [(ngModel)]="profile.contact_phone">
+    </div>
+    <!--<div class="form-group hours">
+      <label for="name">Opening Hours:  </label>
+      <div class="hoursdiv">
+        <input type="text" id="opening_hours" name="opening_hours" placeholder="{{profile.opening_hours}}" [(ngModel)]="profile.opening_hours">
+      </div>
+    </div>-->
+
+    <div class="form-group col-md-offset-2 col-md-10">
+      <input type="submit" value="Save" class="btn btn-default" style="color: rgba(0,68,82,0.9)">
+    </div>
+
+  </form>
+
+</div>

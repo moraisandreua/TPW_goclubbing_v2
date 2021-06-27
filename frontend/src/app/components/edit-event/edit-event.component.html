@@ -1,0 +1,54 @@
+<app-sidebar></app-sidebar>
+<div id="formus" style="width: 60vw; margin: auto; margin-left: 30vw; height: 100vh">
+  <form action="." method="post">
+    <h4 class="form-title">Edit Event</h4>
+    <!--<div class="form-group">
+      <label for="image">Image:  </label>
+      <input type="text" id="image" name="image" placeholder="{{event.image}}" [(ngModel)]="event.image">
+    </div>-->
+    <div class="form-group">
+      <label for="name">Name:  </label>
+      <input type="text" id="name" name="name" placeholder="{{event.name}}" [(ngModel)]="event.name">
+    </div>
+    <div class="form-group">
+      <label for="location">Location:  </label>
+      <input type="text" id="location" name="location" placeholder="{{event.location}}" [(ngModel)]="event.location">
+    </div>
+
+    <!--<div class="form-group">
+      <label for="datetime">Date and Time:  </label>
+      <input type="text" id="datetime" name="datetime" placeholder="{{event.datetime}}" [(ngModel)]="event.datetime">
+    </div>-->
+    <div class="form-group">
+      <label for="type">Type:  </label>
+      <input type="text" id="type" name="type" placeholder="{{event.fk_event_type}}" [(ngModel)]="event.fk_event_type">
+
+      <label for="theme">Theme:  </label>
+      <input type="text" id="theme" name="theme" placeholder="{{event.theme}}" [(ngModel)]="event.theme">
+    </div>
+    <div class="form-group">
+      <label for="organization">Organization:  </label>
+      <input type="text" id="organization" name="organization" placeholder="{{event.organization}}" [(ngModel)]="event.organization">
+
+    </div>
+    <div class="form-group">
+      <label for="min_age">Minimum Age:  </label>
+      <input type="text" id="min_age" name="min_age" placeholder="{{event.min_age}}" [(ngModel)]="event.min_age">
+
+    </div>
+
+    <div class="form-group">
+      <label for="dress_code">Dress Code:  </label>
+      <input type="text" id="dress_code" name="dress_code" placeholder="{{event.dress_code}}" [(ngModel)]="event.dress_code">
+
+    </div>
+    <div class="form-group col-md-offset-2 col-md-10">
+      <a type="delete" value="Delete" class="btn btn-default" [routerLink]="['dashboard/delete', event.id]">Delete</a>
+    </div>
+
+    <div class="form-group col-md-offset-2 col-md-10">
+      <input type="submit" value="Save" class="btn btn-default">
+    </div>
+  </form>
+
+</div>

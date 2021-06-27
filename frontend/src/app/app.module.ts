@@ -8,6 +8,12 @@ import { DashboardHomeComponent } from './components/dashboard-home/dashboard-ho
 import { EventListComponent } from './components/event-list/event-list.component';
 import { AdsListComponent } from './components/ads-list/ads-list.component';
 import { CommentsListComponent } from './components/comments-list/comments-list.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import {FormsModule} from "@angular/forms";
+import { EditEventComponent } from './components/edit-event/edit-event.component';
+import { EditAdComponent } from './components/edit-ad/edit-ad.component';
+import { NewEventComponent } from './components/new-event/new-event.component';
+import { NewAdComponent } from './components/new-ad/new-ad.component';
 
 @NgModule({
   declarations: [
@@ -16,11 +22,17 @@ import { CommentsListComponent } from './components/comments-list/comments-list.
     DashboardHomeComponent,
     EventListComponent,
     AdsListComponent,
-    CommentsListComponent
+    CommentsListComponent,
+    ProfileComponent,
+    EditEventComponent,
+    EditAdComponent,
+    NewEventComponent,
+    NewAdComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

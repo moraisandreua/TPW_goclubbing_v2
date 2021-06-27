@@ -44,4 +44,19 @@ export class AdsListComponent implements OnInit {
       }
     }
   }
+
+  getCommentIndex(id : number) : any{
+    for(let i = 0; i < this.ads.length; i++){
+      if(this.ads[i].id == id){
+        return i;
+      }
+    }
+  }
+
+  delete(id : number){
+    const index: number = this.getCommentIndex(id);
+    if (index !== -1) {
+      this.ads.splice(index, 1);
+    }
+  }
 }
