@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+
 from app.models import Business, BusinessPhoto, EventPhoto, Event, Event_Type, Comment, Advertisement
 from rest_framework import serializers
 from drf_extra_fields.fields import Base64FileField
@@ -19,6 +21,13 @@ class BusinessSerializer(serializers.ModelSerializer):
                   'contact_phone',
                   'user',
                   'profilePhoto')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("id",
+                  "username")
 
 
 class BusinessPhotoSerializer(serializers.ModelSerializer):

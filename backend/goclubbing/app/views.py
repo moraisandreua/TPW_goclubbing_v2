@@ -1,15 +1,27 @@
-from django.shortcuts import render
+import base64
 
-from rest_framework.decorators import api_view
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.core.files import File
+from django.core.files.base import ContentFile
+from django.db.models import FileField
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authtoken.models import Token
+
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from app.models import Business, BusinessPhoto, Event, EventPhoto, Event_Type, Comment, Advertisement
-from app.serializers import BusinessSerializer, BusinessPhotoSerializer, EventSerializer, EventTypeSerializer, EventPhotoSerializer, CommentSerializer, AdvertisementSerializer
+from app.serializers import BusinessSerializer, BusinessPhotoSerializer, EventSerializer, EventTypeSerializer, \
+    EventPhotoSerializer, CommentSerializer, AdvertisementSerializer, UserSerializer
 from dateutil import parser
 # Create your views here.
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_all_businesses(request):
     businesses = Business.objects.all()
     serializer = BusinessSerializer(businesses, many=True)
@@ -17,6 +29,7 @@ def get_all_businesses(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_all_events(request):
     events = Event.objects.all()
     serializer = EventSerializer(events, many=True)
@@ -24,6 +37,7 @@ def get_all_events(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_all_comments(request):
     comments = Comment.objects.all()
     serializer = CommentSerializer(comments, many=True)
@@ -31,6 +45,7 @@ def get_all_comments(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_all_advertisement(request):
     advertisements = Advertisement.objects.all()
     serializer = AdvertisementSerializer(advertisements, many=True)
@@ -38,10 +53,13 @@ def get_all_advertisement(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_business_by_fields(request):
 
     businesses = Business.objects.all()
 
+    if 'id' in request.GET:
+        businesses = businesses.filter(id=request.GET['id'])
     if 'name' in request.GET:
         businesses = businesses.filter(name__icontains=request.GET['name'])
     if 'location' in request.GET:
@@ -66,10 +84,13 @@ def get_business_by_fields(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_events_by_fields(request):
 
     events = Event.objects.all()
 
+    if 'id' in request.GET:
+        events = events.filter(id=request.GET['id'])
     if 'name' in request.GET:
         events = events.filter(name__icontains=request.GET['name'])
     if 'location' in request.GET:
@@ -94,10 +115,13 @@ def get_events_by_fields(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_comments_by_fields(request):
 
     comments = Comment.objects.all()
 
+    if 'id' in request.GET:
+        comments = comments.filter(id=request.GET['id'])
     if 'classification' in request.GET:
         comments = comments.filter(classification__gte=request.GET['classification'])
     if 'event' in request.GET:
@@ -109,10 +133,13 @@ def get_comments_by_fields(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_advertisement_by_fields(request):
 
     advertisements = Advertisement.objects.all()
 
+    if 'id' in request.GET:
+        advertisements = advertisements.filter(id=request.GET['id'])
     if 'event' in request.GET:
         event = Event.objects.filter(id=request.GET['event']).first()
         advertisements = advertisements.filter(event=event)
@@ -130,16 +157,121 @@ def get_advertisement_by_fields(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_all_business_photos(request):
 
     business_photos = BusinessPhoto.objects.all()
+    list = []
 
-    serializer = BusinessPhotoSerializer(business_photos, many=True)
+    if request.method == 'GET':
+        for bp in business_photos:
+            f = open(bp.path.path, 'rb')
+            photo = base64.b64encode(f.read())
+            f.close()
+            msg = {
+                'id': bp.id,
+                'path': photo,
+                'business': bp.business.id
+            }
+            list.append(msg)
+        return Response(list)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_business_photos_by_business_id(request, obj_id):
+
+    try:
+        business_photos = BusinessPhoto.objects.filter(business_id=obj_id)
+    except BusinessPhoto.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    list_events = []
+
+    if request.method == 'GET':
+        for ep in business_photos:
+            f = open(ep.path.path, 'rb')
+            photo = base64.b64encode(f.read())
+            f.close()
+            msg = {
+                'id': ep.id,
+                'path': photo,
+                'business': ep.business.id
+            }
+            list_events.append(msg)
+        return Response(list_events)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_all_events_photos(request):
+
+    event_photos = EventPhoto.objects.all()
+    list = []
+
+    if request.method == 'GET':
+        for ep in event_photos:
+            f = open(ep.path.path, 'rb')
+            photo = base64.b64encode(f.read())
+            f.close()
+            msg = {
+                'id': ep.id,
+                'path': photo,
+                'event': ep.event.id
+            }
+            list.append(msg)
+        return Response(list)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_events_photos_by_event_id(request, obj_id):
+
+    try:
+        event_photos = EventPhoto.objects.filter(event_id=obj_id)
+    except EventPhoto.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    list_events = []
+
+    if request.method == 'GET':
+        for ep in event_photos:
+            f = open(ep.path.path, 'rb')
+            photo = base64.b64encode(f.read())
+            f.close()
+            msg = {
+                'id': ep.id,
+                'path': photo,
+                'event': ep.event.id
+            }
+            list_events.append(msg)
+        return Response(list_events)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_all_users(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_users_by_id(request, obj_id):
+    users = User.objects.get(id=obj_id)
+    serializer = UserSerializer(users)
     return Response(serializer.data)
 
 
 @api_view(['POST'])
+@permission_classes((AllowAny,))
 def create_business(request):
+
+    user = User.objects.create(username=request.data["username"], password=request.data["password"])
+    request.data["user"] = user.id
     serializer = BusinessSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -174,11 +306,77 @@ def create_advertisement(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST'])
+def create_business_photo(request):
+    photo = request.data["path"]
+    business = request.data["business"]
+    if photo is None:
+        return Response({"error": "Path argument was not present!"}, status=status.HTTP_400_BAD_REQUEST)
+    if business is None:
+        return Response({"error": "Business argument was not present!"}, status=status.HTTP_400_BAD_REQUEST)
+    photo = base64.b64decode(photo)
+    business = Business.objects.get(id=business)
+    flag = True
+    i = 0
+    while flag:
+        try:
+            business_photo = BusinessPhoto()
+            path = ContentFile(photo, name=business.name+'.jpeg')
+            business_photo.path = path
+            business_photo.business = business
+            business_photo.save()
+
+            msg = {
+                'id': business_photo.id,
+                'path': business_photo.path.name,
+                'business': business_photo.business.id
+            }
+
+            flag = False
+        except FileExistsError as e:
+            i = i + 1
+    return Response(msg, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+def create_event_photo(request):
+    photo = request.data["path"]
+    event = request.data["event"]
+    if photo is None:
+        return Response({"error": "Path argument was not present!"}, status=status.HTTP_400_BAD_REQUEST)
+    if event is None:
+        return Response({"error": "Business argument was not present!"}, status=status.HTTP_400_BAD_REQUEST)
+    photo = base64.b64decode(photo)
+    event = Event.objects.get(id=event)
+    flag = True
+    i = 0
+    while flag:
+        try:
+            event_photo = EventPhoto()
+            path = ContentFile(photo, name=event.name+'.jpeg')
+            event_photo.path = path
+            event_photo.event = event
+            event_photo.save()
+
+            msg = {
+                'id': event_photo.id,
+                'path': event_photo.path.name,
+                'event': event_photo.event.id
+            }
+
+            flag = False
+        except FileExistsError as e:
+            i = i + 1
+    return Response(msg, status=status.HTTP_201_CREATED)
+
+
 @api_view(['PUT'])
 def update_business(request):
     business_id = request.data['id']
     try:
         business = Business.objects.get(id=business_id)
+        if request.user != business.user:
+            return Response({'error': 'You cant do that!'}, status=status.HTTP_400_BAD_REQUEST)
     except Business.DoesNotExist:
         return Response(status=status.HTTP_400_BAD_REQUEST)
     serializer = BusinessSerializer(business, data=request.data)
@@ -193,6 +391,9 @@ def update_event(request):
     event_id = request.data['id']
     try:
         event = Event.objects.get(id=event_id)
+        business = Business.objects.get(id=event.business_id)
+        if request.user != business.user:
+            return Response({'error': 'You cant do that!'}, status=status.HTTP_400_BAD_REQUEST)
     except Event.DoesNotExist:
         return Response(status=status.HTTP_400_BAD_REQUEST)
     serializer = EventSerializer(event, data=request.data)
@@ -231,9 +432,11 @@ def update_advertisement(request):
 
 
 @api_view(['DELETE'])
-def del_business(request, id):
+def del_business(request, obj_id):
     try:
-        business = Business.objects.get(id=id)
+        business = Business.objects.get(id=obj_id)
+        if request.user != business.user:
+            return Response({'error': 'You cant do that!'}, status=status.HTTP_400_BAD_REQUEST)
     except Business.DoesNotExist:
         return Response(stauts=status.HTTP_400_BAD_REQUEST)
     business.delete()
@@ -241,9 +444,12 @@ def del_business(request, id):
 
 
 @api_view(['DELETE'])
-def del_event(request, id):
+def del_event(request, obj_id):
     try:
-        event = Event.objects.get(id=id)
+        event = Event.objects.get(id=obj_id)
+        business = Business.objects.get(id=event.business_id)
+        if request.user != business.user:
+            return Response({'error': 'You cant do that!'}, status=status.HTTP_400_BAD_REQUEST)
     except Event.DoesNotExist:
         return Response(stauts=status.HTTP_400_BAD_REQUEST)
     event.delete()
@@ -251,9 +457,9 @@ def del_event(request, id):
 
 
 @api_view(['DELETE'])
-def del_comment(request, id):
+def del_comment(request, obj_id):
     try:
-        comment = Comment.objects.get(id=id)
+        comment = Comment.objects.get(id=obj_id)
     except Comment.DoesNotExist:
         return Response(stauts=status.HTTP_400_BAD_REQUEST)
     comment.delete()
@@ -261,10 +467,29 @@ def del_comment(request, id):
 
 
 @api_view(['DELETE'])
-def del_advertisement(request, id):
+def del_advertisement(request, obj_id):
     try:
-        advertisement = Advertisement.objects.get(id=id)
+        advertisement = Advertisement.objects.get(id=obj_id)
     except Advertisement.DoesNotExist:
         return Response(stauts=status.HTTP_400_BAD_REQUEST)
     advertisement.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def login(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+    if username is None or password is None:
+        return Response({'error': 'Please provide both username and password'},
+                        status=status.HTTP_400_BAD_REQUEST)
+    user = authenticate(username=username, password=password)
+    if not user:
+        return Response({'error': 'Invalid Credentials'},
+                        status=status.HTTP_404_NOT_FOUND)
+    token, _ = Token.objects.get_or_create(user=user)
+    return Response({'token': token.key},
+                    status=status.HTTP_200_OK)
+
