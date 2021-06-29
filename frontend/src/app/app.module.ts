@@ -13,6 +13,7 @@ import { EditEventComponent } from './components/edit-event/edit-event.component
 import { EditAdComponent } from './components/edit-ad/edit-ad.component';
 import { NewEventComponent } from './components/new-event/new-event.component';
 import { NewAdComponent } from './components/new-ad/new-ad.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NewAdComponent } from './components/new-ad/new-ad.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
