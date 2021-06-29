@@ -31,8 +31,7 @@ def get_all_businesses(request):
 @api_view(['GET'])
 @permission_classes((AllowAny,))
 def get_businesses_events(request, obj_id):
-    business = Business.objects.get(id=obj_id)
-    events = Business.objects.filter(business=business)
+    events = Event.objects.filter(business_id=obj_id)
     serializer = EventSerializer(events, many=True)
     return Response(serializer.data)
 
