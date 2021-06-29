@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from "../../Event";
-import {EVENTS} from "../../eventslist";
 import {Ad} from "../../Ad";
 import {ADS} from "../../adslist";
 import {Comment} from "../../Comment";
 import {COMMENTS} from "../../commentslist";
 import {Business} from "../../Business";
 import {BUSINESS} from "../../businesslist";
+import {EventService} from "../../event.service";
 
 @Component({
   selector: 'app-dashboard-home',
@@ -14,15 +14,14 @@ import {BUSINESS} from "../../businesslist";
   styleUrls: ['./dashboard-home.component.css'],
 })
 export class DashboardHomeComponent implements OnInit {
-  events: Event[];
+  events!: Event[];
   ads: Ad[];
   comments: Comment[];
   profile: Business;
 
   thisBusiness: string;
 
-  constructor() {
-    this.events = EVENTS;
+  constructor(private eventService: EventService) {
     this.ads = ADS;
     this.comments = COMMENTS;
     this.thisBusiness = "Estudio 22";
@@ -30,6 +29,11 @@ export class DashboardHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getEvents();
+  }
+
+  getEvents(): void{
+    this.eventService.getEvents().subscribe(events => this.events = events);
   }
 
   getMyBusiness(BUSINESS : Business[], thisBusiness: String) : any{
@@ -49,7 +53,7 @@ export class DashboardHomeComponent implements OnInit {
     return false;
   }
 
-  getEvent(id : number) : any{
+  getEventFromId(id : number) : any{
     for(let i = 0; i < this.events.length; i++){
       if(this.events[i].id == id){
         return this.events[i];
