@@ -5,6 +5,6 @@
     <h4 class="form-title" style="color:#000; margin-top: 4%;">My Events</h4>
   </div>
   <ul class="list-group list-group-flush my-list" *ngFor="let event of events">
-    <li class="list-group-item" *ngIf="event.fk_business == profile.name">{{ event.name}}<a [routerLink]="['dashboard/delete/', event.id]"><i class="fa fa-trash black"></i></a><a [routerLink]="['/dashboard/event', event.id]"><i style="float: right" class="fa fa-pencil edit-list"></i></a></li>
+    <li class="list-group-item" *ngIf="event.business.name == profile.name">{{ event.name}}<a [routerLink]="['dashboard/delete/', event.id]"><i class="fa fa-trash black"></i></a><a [routerLink]="['/dashboard/event', event.id]"><i style="float: right" class="fa fa-pencil edit-list"></i></a></li>
   </ul>
 </div>

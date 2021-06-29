@@ -9,7 +9,7 @@
       <a style="float:right; color: white" routerLink="/dashboard/newevent" ><i class="mysmalls fa fa-plus"></i></a>
     </div>
     <div class="events-content" *ngFor="let event of events">
-      <div class="pub" *ngIf="event.fk_business == profile.name">
+      <div class="pub" *ngIf="event.business.name == profile.name">
         <div>
           <p class="fa" style="font-weight: bold">{{ event.name }}</p>
           <a [routerLink]="['/dashboard/event', event.id]"><i style="color:black;" class="fa fa-pencil"></i></a>
@@ -28,9 +28,9 @@
       <a style="float:right; color: white" routerLink="/dashboard/newad" ><i class="mysmalls fa fa-plus"></i></a>
     </div>
     <div class="pubs-content" *ngFor="let ad of ads">
-      <div class="pub" *ngIf="isMyEvent(ad.fk_event)">
+      <div class="pub" *ngIf="isMyEvent(ad.event.id)">
         <div>
-          <p class="fa" style="font-weight: bold">{{ getEvent(ad.fk_event).name}} Add</p>
+          <p class="fa" style="font-weight: bold">{{ getEvent(ad.event.id).name}} Add</p>
           <a [routerLink]="['/dashboard/ad', ad.id]"><i style="color: black;" class="fa fa-pencil"></i></a>
           <!--<p class="grey">{{ ad.expire }}</p>-->
           <p class="grey">{{ ad.body }}</p>
@@ -58,8 +58,8 @@
       <h1>Comments</h1>
     </div>
     <div class="comments-content" *ngFor="let comment of comments">
-      <div class="comment" *ngIf="isMyEvent(comment.fk_event)">
-        <p style="font-weight: bold;margin-left: 4%">Comment in {{ getEvent(comment.fk_event).name }} <a (click)="delete(comment.id)"><i style="color:black;" class="fa fa-trash"></i></a></p>
+      <div class="comment" *ngIf="isMyEvent(comment.event.id)">
+        <p style="font-weight: bold;margin-left: 4%">Comment in {{ getEvent(comment.event.id).name }} <a (click)="delete(comment.id)"><i style="color:black;" class="fa fa-trash"></i></a></p>
         <p style="margin-left: 2.5%">
           <i *ngIf="comment.classification == 1 || comment.classification > 1" class="fa fa-star"></i>
           <i *ngIf="comment.classification == 2 || comment.classification > 2" class="fa fa-star"></i>

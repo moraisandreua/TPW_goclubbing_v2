@@ -7,9 +7,10 @@ export class Business{
   lng!: number;
   type!: string;
   company_name!: string;
-  //opening_hours!: JSONField
+  opening_hours!: string;
   contact_email!: string;
   contact_phone !: number;
   //user!: OneToOneField(User)
   //profilePhoto!: img (?)
+  //businessPhoto!: img (?)
 }

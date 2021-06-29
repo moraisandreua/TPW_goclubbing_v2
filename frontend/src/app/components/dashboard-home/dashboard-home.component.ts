@@ -42,7 +42,7 @@ export class DashboardHomeComponent implements OnInit {
 
   isMyEvent(id :number) : boolean{
     for(let i = 0; i < this.events.length; i++){
-      if(this.events[i].id == id && this.events[i].fk_business == this.thisBusiness){
+      if(this.events[i].id == id && this.events[i].business.name == this.thisBusiness){
         return true;
       }
     }

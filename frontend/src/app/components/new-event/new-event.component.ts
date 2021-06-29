@@ -24,7 +24,7 @@ export class NewEventComponent implements OnInit {
   }
 
   save(e : Event) : void{
-    this.event.fk_business = this.thisBusiness;
+    this.event.business.name = this.thisBusiness;
     this.events.push(this.event);
   }
 

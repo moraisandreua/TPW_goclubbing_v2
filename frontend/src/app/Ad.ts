@@ -1,7 +1,9 @@
+import {Event} from "./Event";
+
 export class Ad{
   id!: number;
-  fk_event!: number;
-  //date!: DateTimeField;
-  //expires!: DateTimeField;
+  event!: Event;
+  date!: string;
+  expire!: string;
   body!: string;
 }
