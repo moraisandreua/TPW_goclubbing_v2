@@ -33,5 +33,4 @@ urlpatterns = [
     path('api/create/event', views.create_event),
     path('api/create/comment', views.create_comment),
     path('api/create/advertisement', views.create_advertisement),
-
 ]

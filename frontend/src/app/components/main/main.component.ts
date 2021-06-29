@@ -15,6 +15,15 @@ export class MainComponent {
   mapStyle:string;
   map: any;
 
+  // sidebar business related
+  businessProfilePhoto: string = "";
+  businessName: string = "";
+  businessType: string = "";
+  businessPhoto: Array<string> = [];
+  businessEvents: Array<any> = [];
+
+
+
   constructor(){
     this.mapWidth=window.innerWidth;
     this.mapHeight=window.innerHeight;
