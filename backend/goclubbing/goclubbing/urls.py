@@ -21,6 +21,7 @@ from app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/business/all', views.get_all_businesses),
+    path('api/business/events', views.get_businesses_events),
     path('api/events/all', views.get_all_events),
     path('api/comments/all', views.get_all_comments),
     path('api/business_photos/all', views.get_all_business_photos),
