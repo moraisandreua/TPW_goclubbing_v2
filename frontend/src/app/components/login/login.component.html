@@ -12,14 +12,14 @@
 
     <div class="form-group-login">
       <label for="usernameSignupTxt">Username:</label>
-      <input type="text" id="usernameSignupTxt" placeholder="Username"/>
+      <input type="text" id="usernameSignupTxt" placeholder="Username" (keyup)="setUsername($event)" />
     </div>
     <div class="form-group-login">
       <label for="passwordSignupTxt">Password:</label>
-      <input type="password" id="passwordSignupTxt" placeholder="Password"/>
+      <input type="password" id="passwordSignupTxt" placeholder="Password" (keyup)="setPassword($event)"/>
     </div>
 
-    <button class="findButton" type="button">Login</button>
+    <button class="findButton" type="button" (click)="login()">Login</button>
   </form>
 </div>
 <script>

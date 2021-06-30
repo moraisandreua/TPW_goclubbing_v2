@@ -16,6 +16,9 @@ import { EditAdComponent } from './components/edit-ad/edit-ad.component';
 import { NewEventComponent } from './components/new-event/new-event.component';
 import { NewAdComponent } from './components/new-ad/new-ad.component';
 import {MainComponent} from "./components/main/main.component";
+import {LoginComponent} from "./components/login/login.component";
+import {CookieService} from "ngx-cookie-service";
+import {SignupComponent} from "./components/signup/signup.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import {MainComponent} from "./components/main/main.component";
     EditAdComponent,
     NewEventComponent,
     NewAdComponent,
-    MainComponent
+    MainComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,7 @@ import {MainComponent} from "./components/main/main.component";
     HttpClientModule,
     CommonModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
