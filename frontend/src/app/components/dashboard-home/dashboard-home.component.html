@@ -58,8 +58,8 @@
       <h1>Comments</h1>
     </div>
     <div class="comments-content" *ngFor="let comment of comments">
-      <div class="comment" *ngIf="isMyEvent(comment.event)"> <!-- TODO: Notice this if not working-->
-        <p style="font-weight: bold;margin-left: 4%">Comment in {{ getEventFromId(comment.event).name }} <a (click)="delete(comment.id)"><i style="color:black;" class="fa fa-trash"></i></a></p><!--TODO: Call delete comment function-->
+      <div class="comment" *ngIf="isMyEvent(comment.event)">
+        <p style="font-weight: bold;margin-left: 4%">Comment in {{ getEventFromId(comment.event).name }} <a (click)="delete(comment)"><i style="color:black;" class="fa fa-trash"></i></a></p>
         <p style="margin-left: 2.5%">
           <i *ngIf="comment.classification == 1 || comment.classification > 1" class="fa fa-star"></i>
           <i *ngIf="comment.classification == 2 || comment.classification > 2" class="fa fa-star"></i>

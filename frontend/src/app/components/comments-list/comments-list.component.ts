@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Comment} from "../../Comment";
 import {Event} from "../../Event";
 import {Business} from "../../Business";
-import {COMMENTS} from "../../commentslist";
 import {EventService} from "../../services/event.service";
+import {CommentService} from "../../services/comment.service";
 
 @Component({
   selector: 'app-comments-list',
@@ -11,20 +11,24 @@ import {EventService} from "../../services/event.service";
   styleUrls: ['./comments-list.component.css']
 })
 export class CommentsListComponent implements OnInit {
-  comments: Comment[];
+  comments!: Comment[];
   events!: Event[];
   //profile: Business;
 
   thisBusiness: number;
 
-  constructor(private eventService : EventService) {
-    this.comments = COMMENTS;
+  constructor(private eventService : EventService, private commentService : CommentService) {
     this.thisBusiness = 1;
     //this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {
     this.getEvents();
+    this.getComments();
+  }
+
+  getComments(){
+    this.commentService.getComments().subscribe(comments => this.comments = comments);
   }
 
   getEvents(): void{
@@ -39,7 +43,7 @@ export class CommentsListComponent implements OnInit {
     }
   }
 
-  private getMyBusiness(BUSINESS: Business[], thisBusiness: string) : any {
+  private getMyBusiness(BUSINESS: Business[], thisBusiness: string) : any { // TODO : Use business service
     for(let i = 0; i < BUSINESS.length; i++){
       if(BUSINESS[i].name == thisBusiness){
         return BUSINESS[i];
@@ -47,18 +51,7 @@ export class CommentsListComponent implements OnInit {
     }
   }
 
-  getCommentIndex(id : number) : any{
-    for(let i = 0; i < this.comments.length; i++){
-      if(this.comments[i].id == id){
-        return i;
-      }
-    }
-  }
-
-  delete(id : number){
-    const index: number = this.getCommentIndex(id);
-    if (index !== -1) {
-      this.comments.splice(index, 1);
-    }
+  delete(comment : Comment){
+    this.commentService.deleteComment(comment);
   }
 }
