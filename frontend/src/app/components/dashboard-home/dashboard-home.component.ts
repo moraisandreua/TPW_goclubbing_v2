@@ -7,6 +7,8 @@ import {EventService} from "../../services/event.service";
 import {AdvertisementService} from "../../services/advertisement.service";
 import {CommentService} from "../../services/comment.service";
 import {BusinessService} from "../../services/business.service";
+import {CookieService} from "ngx-cookie-service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard-home',
@@ -21,15 +23,19 @@ export class DashboardHomeComponent implements OnInit {
 
   thisBusiness: number;
 
-  constructor(private eventService: EventService, private adService : AdvertisementService, private commentService : CommentService, private businessService : BusinessService) {
+  constructor(private router : Router, private eventService: EventService, private adService : AdvertisementService, private commentService : CommentService, private businessService : BusinessService, private cookieService : CookieService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
-    this.getEvents();
-    this.getAds()
-    this.getComments();
-    this.getMyBusiness(this.thisBusiness);
+    if(this.cookieService.get("goclubbingLoginCookie") == ""){
+      this.router.navigate(["/login"]);
+    } else{
+      this.getEvents();
+      this.getAds()
+      this.getComments();
+      this.getMyBusiness(this.thisBusiness);
+    }
   }
 
   getEvents(): void{

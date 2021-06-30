@@ -3,6 +3,10 @@
   <form action="." method="post">
     <h4 class="form-title">Add Event</h4>
     <div class="form-group">
+      <label for="image">Add New Event Image:  </label>
+      <input type="file" id="image" name="image" accept="image/*"> <!-- TODO : [(ngModel)]="event.image"-->
+    </div>
+    <div class="form-group">
       <label for="name">Name:  </label>
       <input type="text" id="name" name="name" [(ngModel)]="event.name">
     </div>
@@ -16,7 +20,11 @@
     </div>
     <div class="form-group">
       <label for="type">Type:  </label>
-      <input type="text" id="type" name="type" [(ngModel)]="event.type">
+      <input type="text" id="type" name="type" placeholder="{{event.type}}" [(ngModel)]="event.type"> <!-- TODO : Show these names insetad of numbers-->
+      <!--<select name="type" id="type">
+        <option *ngFor="let type of types" value="volvo">Volvo</option> TODO : create type service and get types
+        <option value="type.id">{{type.name}}</option>
+      </select>-->
 
       <label for="theme">Theme:  </label>
       <input type="text" id="theme" name="theme" [(ngModel)]="event.theme">

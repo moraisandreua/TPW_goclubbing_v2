@@ -4,8 +4,8 @@
   <form action="." method="post" enctype="multipart/form-data">
     <h4 class="form-title">Edit Profile</h4>
     <div class="form-group">
-      <!--<label for="profilePhoto">Profile Photo:  </label>
-      <input type="text" id="profilePhoto" placeholder={{profile.profilePhoto}} name="{{profile.profilePhoto}}">-->
+      <label for="profilePhoto">Profile Image:  </label>
+      <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*"> <!-- TODO : [(ngModel)]="profile.image"-->
     </div>
     <div class="form-group">
       <label for="name">Name:  </label>
@@ -28,8 +28,8 @@
       <input type="text" id="company_name" name="company_name" placeholder="{{profile.company_name}}" [(ngModel)]="profile.company_name">
     </div>
     <div class="form-group">
-      <!--<label for="image">Image:  </label>
-      <input type="text" id="image" name="image"[(ngModel)]="profile.image">-->
+      <label for="newPhoto">Add New Business Image:  </label>
+      <input type="file" id="newPhoto" name="newPhoto" accept="image/*"> <!-- TODO : [(ngModel)]="profile.businessimages"-->
     </div>
     <div class="form-group">
       <label for="contact_email">Contact Email:  </label>
@@ -40,7 +40,7 @@
     <div class="form-group hours">
       <label for="name">Opening Hours:  </label>
       <div class="hoursdiv">
-        <input type="text" id="opening_hours" name="opening_hours" placeholder="{{profile.opening_hours}}" [(ngModel)]="profile.opening_hours">
+        <input type="text" id="opening_hours" name="opening_hours" placeholder="{{profile.opening_hours}}" [(ngModel)]="profile.opening_hours"> <!-- TODO : Find out why this displays as object -->
       </div>
     </div>
 
