@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit {
   }
 
   getMyBusiness(thisBusiness: number) : any{
-    this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0])
+    this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0]);
+    if(thisBusiness === NaN)
+      console.log("hey");
   }
 }
