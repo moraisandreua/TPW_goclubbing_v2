@@ -664,3 +664,24 @@ body{
 .modalEventImages img{
   width:100%;
 }
+
+.FilteredEvent, .FilteredBusiness{
+  width:100%;
+  padding:5px;
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+}
+
+.FilteredEventBagde, .FilteredBusinessBagde{
+  width:fit-content;
+  height:100%;
+  padding:5px;
+}
+
+.FilteredEventInfo, .FilteredBusinessInfo{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+}
+
+

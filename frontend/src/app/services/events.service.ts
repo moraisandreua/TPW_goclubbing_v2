@@ -21,4 +21,9 @@ export class EventsService {
     const url=this.photosBaseUrl+id;
     return this.http.get<EventPhotos[]>(url);
   }
+
+  getFilteredEvents(queryString:string):Observable<Event[]>{
+    const url=this.baseUrl+queryString;
+    return this.http.get<Event[]>(url);
+  }
 }

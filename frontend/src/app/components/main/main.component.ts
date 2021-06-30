@@ -19,7 +19,7 @@ export class MainComponent {
 
   modalFilterOpen:boolean=false;
   modalEventOpen:boolean=false;
-  modalFilterResult:boolean=false;
+  modalFilterResultOpen:boolean=false;
   businesses: Business[]=[];
   business: Business=new Business();
   eventss: Event[]=[];
@@ -119,10 +119,20 @@ export class MainComponent {
 
   showFilterModal():void{
     this.modalFilterOpen=!this.modalFilterOpen;
+    this.modalFilterResultOpen=false;
+    this.modalEventOpen=false;
   }
 
   showBusinessModal(v:boolean):void{
     this.modalEventOpen=v;
+    this.modalFilterOpen=false;
+    this.modalFilterResultOpen=false;
+  }
+
+  showFilteredResultsModal():void{
+    this.modalEventOpen=false;
+    this.modalFilterOpen=false;
+    this.modalFilterResultOpen=true;
   }
 
   setDate(event:any):void{
@@ -186,6 +196,16 @@ export class MainComponent {
     if(this.business_type!="")
       queryStringBusiness+="type="+this.business_type;
 
-    
+    this.eventsService.getFilteredEvents(queryStringEvent).subscribe(e => {
+      this.filtered_events=e;
+      console.log(this.filtered_events)
+    });
+
+    this.businessService.getFilteredBusinesses(queryStringBusiness).subscribe(b => {
+      this.filtered_businesses=b;
+      console.log(this.filtered_businesses)
+    });
+
+    this.showFilteredResultsModal();
   }
 }

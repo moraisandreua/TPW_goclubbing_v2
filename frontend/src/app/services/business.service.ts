@@ -30,4 +30,9 @@ export class BusinessService {
     const url = this.photosBaseUrl+id;
     return this.http.get<BusinessPhotos[]>(url);
   }
+
+  getFilteredBusinesses(queryString:string):Observable<Business[]>{
+    const url = this.baseUrl+queryString;
+    return this.http.get<Business[]>(url);
+  }
 }
