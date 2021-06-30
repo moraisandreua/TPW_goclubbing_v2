@@ -3,6 +3,7 @@ import {Event} from "../../Event";
 import {EVENTS} from "../../eventslist";
 import {BUSINESS} from "../../businesslist";
 import {Business} from "../../Business";
+import {EventService} from "../../event.service";
 
 @Component({
   selector: 'app-event-list',
@@ -10,40 +11,39 @@ import {Business} from "../../Business";
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
-  events: Event[];
+  events!: Event[];
   profile: Business;
-
   thisBusiness: string;
 
-  constructor() {
-    this.events = EVENTS;
-    this.thisBusiness = "Estudio 22";
+
+  constructor(private eventService : EventService) {
+    this.thisBusiness = "Marbelo";
     this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {
+    this.getEvents();
   }
+
+  getEvents(): any{
+    this.eventService.getEvents().subscribe(events => this.events = events);
+  }
+
+  getEvent(id : number) : any{
+    this.eventService.getEvent(id);
+  }
+
+  delete(e : Event){
+    this.eventService.deleteEvent(e);
+  }
+
+  //____________________________________________________________________
 
   private getMyBusiness(BUSINESS: Business[], thisBusiness: string) : any {
     for(let i = 0; i < BUSINESS.length; i++){
       if(BUSINESS[i].name == thisBusiness){
         return BUSINESS[i];
       }
-    }
-  }
-
-  getEventIndex(id : number) : any{
-    for(let i = 0; i < this.events.length; i++){
-      if(this.events[i].id == id){
-        return i;
-      }
-    }
-  }
-
-  delete(id : number){
-    const index: number = this.getEventIndex(id);
-    if (index !== -1) {
-      this.events.splice(index, 1);
     }
   }
 }

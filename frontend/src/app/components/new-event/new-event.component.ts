@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from "../../Event";
 import {EVENTS} from "../../eventslist";
+import {Business} from "../../Business";
+import {EventService} from "../../event.service";
 
 @Component({
   selector: 'app-new-event',
@@ -9,23 +11,20 @@ import {EVENTS} from "../../eventslist";
 })
 export class NewEventComponent implements OnInit {
   event: Event;
-  events: Event[];
 
-  thisBusiness : string;
+  profile!: Business;
 
-  constructor() {
+  constructor(private eventService : EventService) {
     this.event = new Event();
-    this.events = EVENTS;
-
-    this.thisBusiness = "Estudio 22"
+    //this.profile =
   }
 
   ngOnInit(): void {
   }
 
   save(e : Event) : void{
-    this.event.business.name = this.thisBusiness;
-    this.events.push(this.event);
+    this.event.business = this.profile;
+    this.eventService.createEvent(e);
   }
 
 }

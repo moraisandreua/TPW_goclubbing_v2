@@ -14,11 +14,10 @@
       <label for="location">Location:  </label>
       <input type="text" id="location" name="location" placeholder="{{event.location}}" [(ngModel)]="event.location">
     </div>
-
-    <!--<div class="form-group">
+    <div class="form-group">
       <label for="datetime">Date and Time:  </label>
       <input type="text" id="datetime" name="datetime" placeholder="{{event.datetime}}" [(ngModel)]="event.datetime">
-    </div>-->
+    </div>
     <div class="form-group">
       <label for="type">Type:  </label>
       <input type="text" id="type" name="type" placeholder="{{event.type}}" [(ngModel)]="event.type">
@@ -43,11 +42,11 @@
 
     </div>
     <div class="form-group col-md-offset-2 col-md-10">
-      <a type="delete" value="Delete" class="btn btn-default" [routerLink]="['dashboard/delete', event.id]">Delete</a>
+      <a type="delete" value="Delete" class="btn btn-default" (click)="delete()">Delete</a>
     </div>
 
     <div class="form-group col-md-offset-2 col-md-10">
-      <input type="submit" value="Save" class="btn btn-default">
+      <input type="submit" value="Save" class="btn btn-default" (click)="update()">
     </div>
   </form>
 
