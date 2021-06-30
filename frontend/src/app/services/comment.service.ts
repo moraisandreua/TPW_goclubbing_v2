@@ -24,7 +24,7 @@ export class CommentService {
   createComment(comment : Comment): Observable<any>{
     const url = this.baseURL + 'api/create/comment';
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.post(url, comment, httpOptions);
   }
@@ -32,7 +32,7 @@ export class CommentService {
   updateComment(comment: Comment): Observable<any>{
     const url = this.baseURL + 'api/update/comment';
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.put(url, comment, httpOptions);
   }
@@ -40,7 +40,7 @@ export class CommentService {
   deleteComment(comment: Comment): Observable<any>{
     const url = this.baseURL + 'api/delete/comment/' + comment.id;
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.delete<Comment>(url, httpOptions);
   }

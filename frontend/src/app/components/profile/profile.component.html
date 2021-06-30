@@ -37,15 +37,15 @@
       <label for="contact_phone">Contact Phone:  </label>
       <input type="text" id="contact_phone" name="contact_phone" placeholder="{{profile.contact_phone}}" [(ngModel)]="profile.contact_phone">
     </div>
-    <!--<div class="form-group hours">
+    <div class="form-group hours">
       <label for="name">Opening Hours:  </label>
       <div class="hoursdiv">
         <input type="text" id="opening_hours" name="opening_hours" placeholder="{{profile.opening_hours}}" [(ngModel)]="profile.opening_hours">
       </div>
-    </div>-->
+    </div>
 
     <div class="form-group col-md-offset-2 col-md-10">
-      <input type="submit" value="Save" class="btn btn-default" style="color: rgba(0,68,82,0.9)">
+      <input type="submit" value="Save" (click)="save(profile)" class="btn btn-default" style="color: rgba(0,68,82,0.9); background-color:rgba(0,68,82,0.9);">
     </div>
 
   </form>

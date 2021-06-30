@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Business} from "../../Business";
 import {BusinessService} from "../../services/business.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +13,7 @@ export class ProfileComponent implements OnInit {
 
   thisBusiness: number;
 
-  constructor(private businessService : BusinessService) {
+  constructor(private router : Router, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
@@ -22,7 +23,12 @@ export class ProfileComponent implements OnInit {
 
   getMyBusiness(thisBusiness: number) : any{
     this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0]);
-    if(thisBusiness === NaN)
-      console.log("hey");
+  }
+
+  save(profile : Business) : void{
+    this.businessService.updateBusiness(profile).subscribe(answer => {
+      console.log(answer);
+      this.router.navigate(["/dashboard"]);
+    });
   }
 }

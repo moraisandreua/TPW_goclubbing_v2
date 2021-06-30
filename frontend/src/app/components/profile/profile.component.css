@@ -152,6 +152,6 @@ background-color: white;
   font-weight: bold!important;
 }
 .btn:hover {
-  background-color: white;
+  background-color: white !important;
   color: #194350 !important;
 }

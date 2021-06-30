@@ -25,7 +25,7 @@ export class AdvertisementService {
   createAdvertisement(ad : Ad): Observable<any>{
     const url = this.baseURL + 'api/create/advertisement';
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.post(url, ad, httpOptions);
   }
@@ -33,7 +33,7 @@ export class AdvertisementService {
   updateAdvertisement(ad: Ad): Observable<any>{
     const url = this.baseURL + 'api/update/advertisement';
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.put(url, ad, httpOptions);
   }
@@ -41,7 +41,7 @@ export class AdvertisementService {
   deleteAdvertisement(ad: Ad): Observable<any>{
     const url = this.baseURL + 'api/delete/advertisement/' + ad.id;
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.delete<Event>(url, httpOptions);
   }

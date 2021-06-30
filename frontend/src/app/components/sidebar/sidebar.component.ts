@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
   }
 
   exit() {
-    this.cookieService.set("goclubbingLoginCookie", "", 0);
+    this.cookieService.delete("goclubbingLoginCookie");
     this.router.navigate(["/login"]);
   }
 }
