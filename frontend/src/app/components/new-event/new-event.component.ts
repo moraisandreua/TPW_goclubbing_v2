@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from "../../Event";
-import {EVENTS} from "../../eventslist";
-import {Business} from "../../Business";
 import {EventService} from "../../services/event.service";
-import {BUSINESS} from "../../businesslist";
 
 @Component({
   selector: 'app-new-event',

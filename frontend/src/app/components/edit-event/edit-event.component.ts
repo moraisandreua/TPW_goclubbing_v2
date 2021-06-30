@@ -22,8 +22,6 @@ export class EditEventComponent implements OnInit {
   getEvent() : void{
     const id = +this.route.snapshot.paramMap.get('id')!;
     this.eventService.getEvent(id).subscribe(event => this.event = event[0]);
-    console.log(id);
-    console.log("my name : " + this.event.name);
   }
 
   update() : void{
