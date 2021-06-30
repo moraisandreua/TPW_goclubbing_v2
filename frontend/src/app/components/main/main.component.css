@@ -91,18 +91,17 @@ body{
 }
 
 .modal{
-  display: none;
   position: absolute;
   top:0;
   bottom:0;
   right:0;
   background-color: white;
-  width: 25vw;
   height: 100%;
-  padding: 5px;
   overflow-y: scroll;
   transition: 0.5s all;
   z-index: 3;
+  padding: 1vw;
+  width: 30vw;
 }
 
 .info{
@@ -185,7 +184,7 @@ body{
   width: 75vw !important;
   align-items: center;
   justify-content: flex-end;
-  font-size: 2vw;
+  font-size: 15pt;
   text-decoration: none;
 }
 
@@ -224,6 +223,8 @@ body{
 .formLine label {
   font-size: 1.2vw;
   width: 40%;
+  display:flex;
+  align-items: center;
 }
 
 .formLine input {
@@ -247,6 +248,7 @@ body{
 
 #filterTitle {
   padding-left: 2vw;
+  margin:10px;
 }
 
 #filterButton {
@@ -257,11 +259,6 @@ body{
   border-color: black;
   background-color: black;
   color: white;
-}
-
-.modal {
-  padding: 1vw;
-  width: 30vw;
 }
 
 .eventCard {
@@ -515,12 +512,12 @@ body{
   width: 75vw !important;
   align-items: center;
   justify-content: flex-end;
-  font-size: 2vw;
   text-decoration: none;
 }
 
 .filterContainer a {
   text-decoration: none;
+  cursor: pointer;
 }
 .filterContainer a:visited{
   text-decoration: none;
@@ -549,11 +546,6 @@ body{
   justify-content: space-between;
   padding: 1vw 2vw 1vw 2vw;
   align-content: center;
-}
-
-.formLine label {
-  font-size: 1.2vw;
-  width: 40%;
 }
 
 .formLine input {
@@ -587,11 +579,6 @@ body{
   border-color: black;
   background-color: black;
   color: white;
-}
-
-.modal {
-  padding: 1vw;
-  width: 30vw;
 }
 
 .eventCard {
@@ -676,3 +663,25 @@ body{
 .modalEventImages img{
   width:100%;
 }
+
+.FilteredEvent, .FilteredBusiness{
+  width:100%;
+  padding:5px;
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+  cursor: pointer;
+}
+
+.FilteredEventBagde, .FilteredBusinessBagde{
+  width:fit-content;
+  height:100%;
+  padding:10px;
+}
+
+.FilteredEventInfo, .FilteredBusinessInfo{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
