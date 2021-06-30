@@ -184,7 +184,7 @@ body{
   width: 75vw !important;
   align-items: center;
   justify-content: flex-end;
-  font-size: 2vw;
+  font-size: 15pt;
   text-decoration: none;
 }
 
@@ -512,7 +512,6 @@ body{
   width: 75vw !important;
   align-items: center;
   justify-content: flex-end;
-  font-size: 2vw;
   text-decoration: none;
 }
 
@@ -670,12 +669,13 @@ body{
   padding:5px;
   border-bottom: 1px solid lightgrey;
   display: flex;
+  cursor: pointer;
 }
 
 .FilteredEventBagde, .FilteredBusinessBagde{
   width:fit-content;
   height:100%;
-  padding:5px;
+  padding:10px;
 }
 
 .FilteredEventInfo, .FilteredBusinessInfo{

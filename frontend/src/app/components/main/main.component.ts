@@ -6,6 +6,8 @@ import {Event} from "../../Event";
 import {BusinessService} from "../../services/business.service";
 import {EventsService} from "../../services/events.service";
 import {BusinessPhotos} from "../../BusinessPhotos";
+import {BusinessType} from "../../BusinessType";
+import {EventTypes} from "../../EventTypes";
 
 @Component({
   selector: 'app-root',
@@ -35,6 +37,10 @@ export class MainComponent {
   business_name:string="";
   event_name:string="";
   business_type:string="";
+
+  //filter options
+  filters_business_types:BusinessType[]=[];
+  filters_event_types:EventTypes[]=[];
 
   // filtered results
   filtered_businesses:Business[]=[];
@@ -121,6 +127,14 @@ export class MainComponent {
     this.modalFilterOpen=!this.modalFilterOpen;
     this.modalFilterResultOpen=false;
     this.modalEventOpen=false;
+
+    this.eventsService.getEventTypes().subscribe(e => {
+      this.filters_event_types=e;
+    });
+
+    this.businessService.getBusinessesTypes().subscribe(b => {
+      this.filters_business_types=b;
+    });
   }
 
   showBusinessModal(v:boolean):void{
@@ -167,6 +181,17 @@ export class MainComponent {
     this.business_type=event.target.value;
   }
 
+  clearFilter():void{
+    this.date="";
+    this.location="";
+    this.type="";
+    this.theme="";
+    this.age=0;
+    this.business_name="";
+    this.event_name="";
+    this.business_type="";
+  }
+
   filter():void{
     let queryStringBusiness="?"
     let queryStringEvent="?"
@@ -174,9 +199,10 @@ export class MainComponent {
     if(this.date!="")
       queryStringEvent+="datetime="+this.date;
 
-    if(this.location!="")
+    if(this.location!=""){
       queryStringEvent+="location="+this.location;
       queryStringBusiness+="location="+this.location;
+    }
 
     if(this.type!="")
       queryStringEvent+="type="+this.type;
@@ -196,16 +222,19 @@ export class MainComponent {
     if(this.business_type!="")
       queryStringBusiness+="type="+this.business_type;
 
-    this.eventsService.getFilteredEvents(queryStringEvent).subscribe(e => {
-      this.filtered_events=e;
-      console.log(this.filtered_events)
-    });
+    if(queryStringEvent!="?")
+      this.eventsService.getFilteredEvents(queryStringEvent).subscribe(e => {
+        this.filtered_events=e;
+        console.log(queryStringEvent)
+      });
 
-    this.businessService.getFilteredBusinesses(queryStringBusiness).subscribe(b => {
-      this.filtered_businesses=b;
-      console.log(this.filtered_businesses)
-    });
+    if(queryStringBusiness!="?")
+      this.businessService.getFilteredBusinesses(queryStringBusiness).subscribe(b => {
+        this.filtered_businesses=b;
+        console.log(queryStringBusiness)
+      });
 
     this.showFilteredResultsModal();
+    this.clearFilter();
   }
 }

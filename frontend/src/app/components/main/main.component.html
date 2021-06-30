@@ -5,7 +5,7 @@
         <a (click)="showFilterModal()">Filter</a>
     </div>
     <div class="searchBoxInputContainer">
-      <input id="textbox" type="text" placeholder="Search for Places by name, location..." name="query"/><button id="button" type="submit" class="findButton">Find events</button>
+      <input id="textbox" type="text" placeholder="Search for Places by name, location..." name="query" (keyup)="setLocation($event)" /><button id="button" type="submit" class="findButton" (click)="filter()">Find events</button>
     </div>
   </div>
   <div class="content">
@@ -63,9 +63,10 @@
           <input type="text" (keyup)="setLocation($event)"/>
         </div>
         <div class="formLine">
-          <label>Type</label>
+          <label>Event Type</label>
           <select (change)="setType($event)">
             <option>-</option>
+            <option *ngFor="let et of filters_event_types" value="{{et.name}}">{{et.name}}</option>
           </select>
         </div>
         <div class="formLine">
@@ -88,6 +89,7 @@
           <label>Business Type</label>
           <select (change)="setBusinessType($event)">
             <option>-</option>
+            <option *ngFor="let bt of filters_business_types" value="{{bt.type}}">{{bt.type}}</option>
           </select>
         </div>
         <button id="filterButton" type="button" (click)="filter()">Search</button>
@@ -97,7 +99,7 @@
     <div *ngIf="modalFilterResultOpen" id="modalFilteredItems" class="modal">
       <h2 class="filterTitle">Events</h2>
       <div *ngFor="let e of filtered_events">
-        <div class="FilteredEvent">
+        <div class="FilteredEvent" (click)="getBusiness(e.business)">
           <div class="FilteredEventBagde">
             Event
           </div>
@@ -105,13 +107,13 @@
             <div><b>{{ e.name }}</b></div>
             <div>{{ e.location }}</div>
             <div>{{ e.theme }}</div>
-            <div>{{ e.min_age }}</div>
+            <div>({{ e.min_age }}+)</div>
           </div>
         </div>
       </div>
       <h2 class="filterTitle">Business</h2>
       <div *ngFor="let b of filtered_businesses">
-        <div class="FilteredBusiness">
+        <div class="FilteredBusiness" (click)="getBusiness(b.id)">
           <div class="FilteredBusinessBagde">
             Business
           </div>
