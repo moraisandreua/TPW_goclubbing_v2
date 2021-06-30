@@ -38,6 +38,33 @@ def get_businesses_events(request, obj_id):
 
 @api_view(['GET'])
 @permission_classes((AllowAny,))
+def get_business_types(request):
+    businesses = Business.objects.all()
+    types = []
+    response = []
+    for business in businesses:
+        if business.type not in types:
+            types.append(business.type)
+
+    for type in types:
+        msg = {
+            "type": type
+        }
+        response.append(msg)
+
+    return Response(response)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def get_event_types(request):
+    event_types = Event_Type.objects.all()
+    serializer = EventTypeSerializer(event_types, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
 def get_all_events(request):
     events = Event.objects.all()
     serializer = EventSerializer(events, many=True)
