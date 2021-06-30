@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +15,7 @@ import { EditEventComponent } from './components/edit-event/edit-event.component
 import { EditAdComponent } from './components/edit-ad/edit-ad.component';
 import { NewEventComponent } from './components/new-event/new-event.component';
 import { NewAdComponent } from './components/new-ad/new-ad.component';
+import {MainComponent} from "./components/main/main.component";
 
 @NgModule({
   declarations: [
@@ -27,13 +29,15 @@ import { NewAdComponent } from './components/new-ad/new-ad.component';
     EditEventComponent,
     EditAdComponent,
     NewEventComponent,
-    NewAdComponent
+    NewAdComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
