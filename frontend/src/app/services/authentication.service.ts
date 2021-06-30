@@ -13,12 +13,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private baseUrlLogin = "http://mike19.pythonanywhere.com/api/login";
+  private baseUrlLogin = "http://mike19.pythonanywhere.com/api/login/";
 
   constructor(private http: HttpClient) { }
 
   login(username:string, password:string):Observable<LoginToken>{
     const url = this.baseUrlLogin;
-    return this.http.post<LoginToken>(url, {username:username, password:password}, httpOptions)
+    return this.http.post<LoginToken>(url, {username:username, password:password})
   }
 }

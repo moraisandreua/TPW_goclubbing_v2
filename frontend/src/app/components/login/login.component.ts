@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
+import { catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-root',
@@ -8,11 +12,12 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class LoginComponent {
   title = 'Go Clubbing';
-  message = {"type":"success", "body":"corpo da mensagem"};
+  message:any = null;
   username:string="";
   password:string="";
+  error:any=null;
 
-  constructor(private authenticationService:AuthenticationService) { }
+  constructor(private authenticationService:AuthenticationService, private cookieService:CookieService) { }
 
   setUsername(event:any):void{
     this.username=event.target.value;
@@ -23,10 +28,18 @@ export class LoginComponent {
   }
 
   login():void{
-    console.log(this.username + " / " + this.password);
+    //console.log(this.username + " / " + this.password);
     if(this.username!="" && this.password!="")
-      this.authenticationService.login(this.username, this.password).subscribe(t => {
-        console.log(t);
+      this.authenticationService.login(this.username, this.password).pipe(catchError(error => {
+        return of(error.error);
+      })).subscribe( res => {
+        if("token" in res){
+          this.cookieService.set("goclubbingLoginCookie", res.token)
+          this.message={"type":"success", "body":"Login successful"};
+        }else{
+          this.message={"type":"error", "body":res.error};
+        }
+
       })
   }
 }
