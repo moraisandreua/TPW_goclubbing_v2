@@ -21,7 +21,9 @@ export class AuthenticationService {
     return this.http.post<LoginToken>(url, {username:username, password:password})
   }
 
-  signup(name:string, location:string, type:string, company_name:string, contact_email:string, contact_phone:string, username:string, password:string):Observable<RegisterToken>{
+  signup(name:string, location:string, type:string, company_name:string, contact_email:string, contact_phone:number, username:string, password:string):Observable<RegisterToken>{
     const url = this.baseUrlSignup;
+    //console.log({name:name, location:location, type:type, company_name:company_name, contact_email:contact_email, contact_phone:contact_phone, username:username, password:password});
+    return this.http.post<RegisterToken>(url, {name:name, location:location, type:type, company_name:company_name, contact_email:contact_email, contact_phone:contact_phone, username:username, password:password})
   }
 }
