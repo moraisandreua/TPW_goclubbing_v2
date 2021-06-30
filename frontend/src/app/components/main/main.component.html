@@ -14,23 +14,23 @@
     <div *ngIf="modalEventOpen" id="modal" class="modal">
       <div class="info">
         <div class="infoPic">
-          <img src="businessFoto"/>
+          <img src="http://mike19.pythonanywhere.com{{ business.profilePhoto }}"/>
         </div>
         <div class="infoText">
           <div class="infoTextName"><b>{{ business.name }}</b></div>
           <div class="infoTextName">{{ business.type }}</div>
         </div>
       </div>
-      <div class="modalImages" ><!-- *ngFor="let image of businessPhoto" -->
-        <img src="imagem"/>
+      <div class="modalImages" *ngFor="let image of business_photos">
+        <img src="data:image/png;base64,{{ image }}"/>
       </div>
       <div class="ModalTitle">
         Events:
       </div>
       <div class="modalEvents" *ngFor=" let e of eventss">
         <div class="modalEvent">
-          <div class="modalEventImages" ><!-- *ngFor="let im of e['images']" -->
-            <img src="../"/>
+          <div class="modalEventImages" *ngFor="let im of event_photos[e.id]"><!--  -->
+            <img src="data:image/png;base64,{{ im }}"/>
           </div>
           <div class="modalEventTitle">
             {{ e.name }} ({{ e.min_age }}+)
@@ -56,41 +56,41 @@
       <form action="." method="post">
         <div class="formLine">
           <label>Date</label>
-          <input type="date"/>
+          <input type="date" (change)="setDate($event)" />
         </div>
         <div class="formLine">
           <label>Location</label>
-          <input type="text"/>
+          <input type="text" (keyup)="setLocation($event)"/>
         </div>
         <div class="formLine">
           <label>Type</label>
-          <select>
+          <select (change)="setType($event)">
             <option>-</option>
           </select>
         </div>
         <div class="formLine">
           <label>Theme</label>
-          <input type="text"/>
+          <input type="text" (keyup)="setTheme($event)"/>
         </div>
         <div class="formLine">
           <label>Min. Age</label>
-          <input type="number"/>
+          <input type="number" (keyup)="setAge($event)"/>
         </div>
         <div class="formLine">
-          <label>Business</label>
-          <input type="text"/>
+          <label>Business Name</label>
+          <input type="text" (keyup)="setBusiness($event)"/>
         </div>
         <div class="formLine">
           <label>Event Name</label>
-          <input type="text"/>
+          <input type="text" (keyup)="setName($event)"/>
         </div>
         <div class="formLine">
           <label>Business Type</label>
-          <select>
+          <select (change)="setBusinessType($event)">
             <option>-</option>
           </select>
         </div>
-        <button id="filterButton" type="button" >Search</button>
+        <button id="filterButton" type="button" (click)="filter()">Search</button>
       </form>
     </div>
   </div>
