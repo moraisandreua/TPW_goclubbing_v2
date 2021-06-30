@@ -3,17 +3,14 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {Event} from "../Event";
 import {Ad} from "../Ad";
-
-const httpOptions = {
-  headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':'1'})
-}
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdvertisementService {
   private baseURL = 'http://mike19.pythonanywhere.com/'
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private cookieService : CookieService) { }
 
   getAdvertisement(id : number) : Observable<Ad[]>{
     const url = this.baseURL + 'api/advertisements/search?id=' + id;
@@ -27,16 +24,25 @@ export class AdvertisementService {
 
   createAdvertisement(ad : Ad): Observable<any>{
     const url = this.baseURL + 'api/create/advertisement';
+    let httpOptions = {
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+    }
     return this.http.post(url, ad, httpOptions);
   }
 
   updateAdvertisement(ad: Ad): Observable<any>{
     const url = this.baseURL + 'api/update/advertisement';
+    let httpOptions = {
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+    }
     return this.http.put(url, ad, httpOptions);
   }
 
   deleteAdvertisement(ad: Ad): Observable<any>{
     const url = this.baseURL + 'api/delete/advertisement/' + ad.id;
+    let httpOptions = {
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Bearer " + this.cookieService.get("goclubbingLoginCookie")})
+    }
     return this.http.delete<Event>(url, httpOptions);
   }
 }

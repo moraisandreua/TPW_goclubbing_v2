@@ -13,8 +13,8 @@ export class ProfileComponent implements OnInit {
   thisBusiness: string;
 
   constructor() {
-    this.thisBusiness = "Estudio 22";
-    this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
+    this.thisBusiness = "Estudio 22";  // TODO: Fix this to use businessID
+    this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);  // TODO: Fix this to use business service
   }
 
   getMyBusiness(BUSINESS : Business[], thisBusiness: String) : any{

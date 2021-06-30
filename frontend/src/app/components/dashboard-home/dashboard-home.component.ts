@@ -22,7 +22,7 @@ export class DashboardHomeComponent implements OnInit {
   thisBusiness: number;
 
   constructor(private eventService: EventService, private adService : AdvertisementService, private commentService : CommentService) {
-    this.thisBusiness = 1;
+    this.thisBusiness = 1;  // TODO : Change this to use businessID
     this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 

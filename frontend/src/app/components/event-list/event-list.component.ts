@@ -16,7 +16,7 @@ export class EventListComponent implements OnInit {
 
 
   constructor(private eventService : EventService) {
-    this.thisBusiness = 1;
+    this.thisBusiness = 1; // TODO : Change this to token
     this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
@@ -36,9 +36,7 @@ export class EventListComponent implements OnInit {
     this.eventService.deleteEvent(e);
   }
 
-  //____________________________________________________________________
-
-  private getMyBusiness(BUSINESS: Business[], thisBusiness: number) : any {
+  private getMyBusiness(BUSINESS: Business[], thisBusiness: number) : any {  // TODO: Fix this to use business service
     for(let i = 0; i < BUSINESS.length; i++){
       if(BUSINESS[i].id == thisBusiness){
         return BUSINESS[i];

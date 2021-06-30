@@ -14,7 +14,7 @@ export class NewEventComponent implements OnInit {
 
   constructor(private eventService : EventService) {
     this.event = new Event();
-    this.profile = 1
+    this.profile = 1 // TODO: Fix this to use businessID
   }
 
   ngOnInit(): void {

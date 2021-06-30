@@ -18,7 +18,7 @@ export class AdsListComponent implements OnInit {
   thisBusiness: number;
 
   constructor(private eventService: EventService, private adService:AdvertisementService) {
-    this.thisBusiness = 1;
+    this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
     //this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
