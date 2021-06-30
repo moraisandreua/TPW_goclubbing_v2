@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'rest_framework',
     'corsheaders',
-    'drf_extra_fields'
+    'drf_extra_fields',
+    'rest_framework.authtoken',
+    'rest_auth'
 ]
 
 MIDDLEWARE = [
@@ -129,7 +131,10 @@ STATIC_URL = '/static/'
 # DJANGO REST FRAMEWORK Config
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework.authentication.TokenAuthentication',
     ]
 }
 
