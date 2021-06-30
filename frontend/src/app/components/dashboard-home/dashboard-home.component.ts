@@ -9,6 +9,7 @@ import {CommentService} from "../../services/comment.service";
 import {BusinessService} from "../../services/business.service";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-dashboard-home',
@@ -21,21 +22,33 @@ export class DashboardHomeComponent implements OnInit {
   comments!: Comment[];
   profile!: Business;
 
+  isVerified!: boolean;
   thisBusiness: number;
 
-  constructor(private router : Router, private eventService: EventService, private adService : AdvertisementService, private commentService : CommentService, private businessService : BusinessService, private cookieService : CookieService) {
+  constructor(private router : Router, private authService : AuthenticationService, private eventService: EventService, private adService : AdvertisementService, private commentService : CommentService, private businessService : BusinessService, private cookieService : CookieService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
-    if(this.cookieService.get("goclubbingLoginCookie") == ""){
-      this.router.navigate(["/login"]);
-    } else{
+    this.verifySession();
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ){
       this.getEvents();
       this.getAds()
       this.getComments();
       this.getMyBusiness(this.thisBusiness);
+    } else{
+      this.router.navigate(["/login"]);
     }
+  }
+
+  verifySession() : any {
+    this.authService.verify(this.thisBusiness).subscribe(json => {
+      if('message' in json) {
+        return true;
+      } else{
+        return false;
+      }
+    })
   }
 
   getEvents(): void{

@@ -6,6 +6,8 @@ import {EventService} from "../../services/event.service";
 import {AdvertisementService} from "../../services/advertisement.service";
 import {BusinessService} from "../../services/business.service";
 import {profilingEnabled} from "@angular-devkit/build-angular/src/utils/environment-options";
+import {CookieService} from "ngx-cookie-service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-ads-list',
@@ -19,14 +21,18 @@ export class AdsListComponent implements OnInit {
 
   thisBusiness: number;
 
-  constructor(private eventService: EventService, private adService:AdvertisementService, private businessService : BusinessService) {
+  constructor(private router : Router, private cookieService : CookieService, private eventService: EventService, private adService:AdvertisementService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
-    this.getEvents();
-    this.getAds();
-    this.getMyBusiness(this.thisBusiness);
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
+      this.getEvents();
+      this.getAds();
+      this.getMyBusiness(this.thisBusiness);
+    } else{
+      this.router.navigate(["/login"]);
+    }
   }
 
   getEvents(): void{
