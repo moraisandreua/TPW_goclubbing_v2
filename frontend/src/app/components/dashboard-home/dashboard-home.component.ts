@@ -19,12 +19,12 @@ export class DashboardHomeComponent implements OnInit {
   comments: Comment[];
   profile: Business;
 
-  thisBusiness: string;
+  thisBusiness: number;
 
   constructor(private eventService: EventService) {
     this.ads = ADS;
     this.comments = COMMENTS;
-    this.thisBusiness = "Estudio 22";
+    this.thisBusiness = 1;
     this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
@@ -33,12 +33,12 @@ export class DashboardHomeComponent implements OnInit {
   }
 
   getEvents(): void{
-    this.eventService.getEvents().subscribe(events => this.events = events);
+    this.eventService.getEvents().subscribe(events => this.events = events)
   }
 
-  getMyBusiness(BUSINESS : Business[], thisBusiness: String) : any{
+  getMyBusiness(BUSINESS : Business[], thisBusiness: number) : any{
     for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].name == thisBusiness){
+      if(BUSINESS[i].id == thisBusiness){
         return BUSINESS[i];
       }
     }
@@ -46,7 +46,7 @@ export class DashboardHomeComponent implements OnInit {
 
   isMyEvent(id :number) : boolean{
     for(let i = 0; i < this.events.length; i++){
-      if(this.events[i].id == id && this.events[i].business.name == this.thisBusiness){
+      if(this.events[i].id == id && this.events[i].business == this.thisBusiness){
         return true;
       }
     }

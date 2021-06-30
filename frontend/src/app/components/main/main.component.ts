@@ -80,7 +80,7 @@ export class MainComponent {
 
     this.eventsService.getEvents().subscribe(e => {
       e.map(ev => {
-        if(ev.business.id==businessId){
+        if(ev.business==businessId){
           this.eventss.push(ev)
         }
       });

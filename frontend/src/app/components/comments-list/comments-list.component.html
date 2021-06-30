@@ -5,6 +5,6 @@
     <h4 class="form-title" style="color:#000; margin-top: 4%;">My Comments</h4>
   </div>
   <ul class="list-group list-group-flush my-list" *ngFor="let comment of comments">
-    <li class="list-group-item" *ngIf="getEvent(comment.event.id) && getEvent(comment.event.id).fk_business == profile.name">Comment in {{getEvent(comment.event.id).name}}{{ comment.body}}<a (click)="delete(comment.id)"><i class="fa fa-trash black"></i></a><a [routerLink]="['dashboard/comment', comment.id]"><i style="float: right" class="fa fa-pencil edit-list"></i></a></li>
+    <li class="list-group-item" *ngIf="getEvent(comment.event) && getEvent(comment.event).business == thisBusiness">Comment in {{getEvent(comment.event).name}}{{ comment.body}}<a (click)="delete(comment.id)"><i class="fa fa-trash black"></i></a><a [routerLink]="['dashboard/comment', comment.id]"><i style="float: right" class="fa fa-pencil edit-list"></i></a></li>
   </ul>
 </div>

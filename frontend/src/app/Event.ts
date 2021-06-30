@@ -6,10 +6,10 @@ export class Event{
   name!: string;
   location!: string;
   datetime!: string;
-  type!: Event_Type;
+  type!: string;
   theme!: string;
   min_age!: number;
   organization!: string;
   dress_code!: string;
-  business!: Business;
+  business!: number;
 }

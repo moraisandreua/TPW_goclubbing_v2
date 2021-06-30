@@ -14,15 +14,15 @@ import {EVENTS} from "../../eventslist";
 export class CommentsListComponent implements OnInit {
   comments: Comment[];
   events: Event[];
-  profile: Business;
+  //profile: Business;
 
-  thisBusiness: string;
+  thisBusiness: number;
 
   constructor() {
     this.comments = COMMENTS;
     this.events = EVENTS;
-    this.thisBusiness = "Estudio 22";
-    this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
+    this.thisBusiness = 1;
+    //this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {

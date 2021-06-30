@@ -13,11 +13,11 @@ import {EventService} from "../../services/event.service";
 export class EventListComponent implements OnInit {
   events!: Event[];
   profile: Business;
-  thisBusiness: string;
+  thisBusiness: number;
 
 
   constructor(private eventService : EventService) {
-    this.thisBusiness = "Marbelo";
+    this.thisBusiness = 1;
     this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
@@ -39,9 +39,9 @@ export class EventListComponent implements OnInit {
 
   //____________________________________________________________________
 
-  private getMyBusiness(BUSINESS: Business[], thisBusiness: string) : any {
+  private getMyBusiness(BUSINESS: Business[], thisBusiness: number) : any {
     for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].name == thisBusiness){
+      if(BUSINESS[i].id == thisBusiness){
         return BUSINESS[i];
       }
     }

@@ -13,11 +13,11 @@ import {BUSINESS} from "../../businesslist";
 export class NewEventComponent implements OnInit {
   event: Event;
 
-  profile!: Business;
+  profile!: number;
 
   constructor(private eventService : EventService) {
     this.event = new Event();
-    this.profile = BUSINESS[0]
+    this.profile = 1
   }
 
   ngOnInit(): void {

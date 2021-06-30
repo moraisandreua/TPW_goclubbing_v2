@@ -4,5 +4,5 @@ export class Comment{
   id!: number;
   classification!: number;
   body!: string;
-  event!: Event;
+  event!: number;
   }
