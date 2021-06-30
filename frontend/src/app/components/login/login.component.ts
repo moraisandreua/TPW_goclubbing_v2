@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import { catchError } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
+import {Router} from "@angular/router";
 import { of } from 'rxjs';
 import {CookieService} from "ngx-cookie-service";
 
@@ -17,7 +17,7 @@ export class LoginComponent {
   password:string="";
   error:any=null;
 
-  constructor(private authenticationService:AuthenticationService, private cookieService:CookieService) { }
+  constructor(private authenticationService:AuthenticationService, private cookieService:CookieService, private router:Router) { }
 
   setUsername(event:any):void{
     this.username=event.target.value;
@@ -37,6 +37,9 @@ export class LoginComponent {
           this.cookieService.set("goclubbingLoginCookie", res.token)
           localStorage.setItem("goclubbingBusinessID", res.business)
           this.message={"type":"success", "body":"Login successful"};
+          setTimeout(() => {
+            this.router.navigate(["/dashboard"]);
+          }, 750)
         }else{
           this.message={"type":"error", "body":res.error};
         }
