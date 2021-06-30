@@ -3,8 +3,9 @@ import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {ADS} from "../../adslist";
 import {Event} from "../../Event"
-import {EVENTS} from "../../eventslist";
 import {Ad} from "../../Ad";
+import {EventService} from "../../services/event.service";
+import {AdvertisementService} from "../../services/advertisement.service";
 
 @Component({
   selector: 'app-edit-ad',
@@ -14,21 +15,23 @@ import {Ad} from "../../Ad";
 export class EditAdComponent implements OnInit {
   @Input() ad!: Ad;
 
-  events : Event[];
+  events!: Event[];
 
-  constructor(private route: ActivatedRoute, private location: Location) {
-    this.events = EVENTS;
+  constructor(private route: ActivatedRoute, private location: Location, private eventService : EventService, private adService : AdvertisementService) {
   }
 
   ngOnInit(): void {
+    this.getEvents()
     this.getAd();
   }
 
+  getEvents(): void{
+    this.eventService.getEvents().subscribe(events => this.events = events)
+  }
+
   getAd() : void{
-    // @ts-ignore
-    const id = +this.route.snapshot.paramMap.get('id');
-    // @ts-ignore
-    this.ad = ADS.find(ad => ad.id === id);
+    const id = +this.route.snapshot.paramMap.get('id')!;
+    this.adService.getAdvertisement(id).subscribe(ad => this.ad = ad[0]);
   }
 
   getEvent(id : number) : any{
@@ -39,6 +42,8 @@ export class EditAdComponent implements OnInit {
     }
   }
 
-  delete(ad : Ad) : void{}
+  delete() : void{
+    this.adService.deleteAdvertisement(this.ad);
+  }
 
 }

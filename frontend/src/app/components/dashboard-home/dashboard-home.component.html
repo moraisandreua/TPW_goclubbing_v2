@@ -28,7 +28,7 @@
       <a style="float:right; color: white" routerLink="/dashboard/newad" ><i class="mysmalls fa fa-plus"></i></a>
     </div>
     <div class="pubs-content" *ngFor="let ad of ads">
-      <div class="pub"> <!-- TODO:  *ngIf="isMyEvent(ad.event.id)"-->
+      <div class="pub" *ngIf="isMyEvent(ad.event)">
         <div>
           <p class="fa" style="font-weight: bold">{{ getEventFromId(ad.event).name}} Add</p>
           <a [routerLink]="['/dashboard/ad', ad.id]"><i style="color: black;" class="fa fa-pencil"></i></a>

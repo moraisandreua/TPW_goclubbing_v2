@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Ad} from "../../Ad"
 import {Business} from "../../Business";
 import {Event} from "../../Event"
-import {ADS} from "../../adslist";
-import {BUSINESS} from "../../businesslist";
-import {EVENTS} from "../../eventslist"
+import {EventService} from "../../services/event.service";
+import {AdvertisementService} from "../../services/advertisement.service";
 
 @Component({
   selector: 'app-ads-list',
@@ -12,26 +11,33 @@ import {EVENTS} from "../../eventslist"
   styleUrls: ['./ads-list.component.css']
 })
 export class AdsListComponent implements OnInit {
-  ads: Ad[];
-  events: Event[]
+  ads!: Ad[];
+  events!: Event[]
   //profile: Business;
 
   thisBusiness: number;
 
-  constructor() {
-    this.ads = ADS;
-    this.events = EVENTS;
-
+  constructor(private eventService: EventService, private adService:AdvertisementService) {
     this.thisBusiness = 1;
     //this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {
+    this.getEvents();
+    this.getAds();
   }
 
-  private getMyBusiness(BUSINESS: Business[], thisBusiness: string) : any{
+  getEvents(): void{
+    this.eventService.getEvents().subscribe(events => this.events = events)
+  }
+
+  getAds() : void{
+    this.adService.getAdvertisements().subscribe(ads => this.ads = ads);
+  }
+
+  private getMyBusiness(BUSINESS: Business[], thisBusiness: number) : any{ // TODO : Change this to use business service
     for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].name == thisBusiness){
+      if(BUSINESS[i].id == thisBusiness){
         return BUSINESS[i];
       }
     }
@@ -45,18 +51,7 @@ export class AdsListComponent implements OnInit {
     }
   }
 
-  getCommentIndex(id : number) : any{
-    for(let i = 0; i < this.ads.length; i++){
-      if(this.ads[i].id == id){
-        return i;
-      }
-    }
-  }
-
-  delete(id : number){
-    const index: number = this.getCommentIndex(id);
-    if (index !== -1) {
-      this.ads.splice(index, 1);
-    }
+  delete(ad : Ad) {
+    this.adService.deleteAdvertisement(ad);
   }
 }

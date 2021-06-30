@@ -7,6 +7,7 @@ import {COMMENTS} from "../../commentslist";
 import {Business} from "../../Business";
 import {BUSINESS} from "../../businesslist";
 import {EventService} from "../../services/event.service";
+import {AdvertisementService} from "../../services/advertisement.service";
 
 @Component({
   selector: 'app-dashboard-home',
@@ -15,14 +16,13 @@ import {EventService} from "../../services/event.service";
 })
 export class DashboardHomeComponent implements OnInit {
   events!: Event[];
-  ads: Ad[];
+  ads!: Ad[];
   comments: Comment[];
   profile: Business;
 
   thisBusiness: number;
 
-  constructor(private eventService: EventService) {
-    this.ads = ADS;
+  constructor(private eventService: EventService, private adService : AdvertisementService) {
     this.comments = COMMENTS;
     this.thisBusiness = 1;
     this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
@@ -30,19 +30,17 @@ export class DashboardHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEvents();
+    this.getAds()
   }
 
   getEvents(): void{
     this.eventService.getEvents().subscribe(events => this.events = events)
   }
 
-  getMyBusiness(BUSINESS : Business[], thisBusiness: number) : any{
-    for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].id == thisBusiness){
-        return BUSINESS[i];
-      }
-    }
+  getAds() : void{
+    this.adService.getAdvertisements().subscribe(ads => this.ads = ads);
   }
+
 
   isMyEvent(id :number) : boolean{
     for(let i = 0; i < this.events.length; i++){
@@ -51,6 +49,14 @@ export class DashboardHomeComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  getMyBusiness(BUSINESS : Business[], thisBusiness: number) : any{ // TODO: Fix this to use business service
+    for(let i = 0; i < BUSINESS.length; i++){
+      if(BUSINESS[i].id == thisBusiness){
+        return BUSINESS[i];
+      }
+    }
   }
 
   getEventFromId(id : number) : any{
@@ -69,7 +75,7 @@ export class DashboardHomeComponent implements OnInit {
     }
   }
 
-  delete(id : number){
+  delete(id : number){ // TODO : Fix this to use delete function from comment service
     const index: number = this.getCommentIndex(id);
     if (index !== -1) {
       this.comments.splice(index, 1);

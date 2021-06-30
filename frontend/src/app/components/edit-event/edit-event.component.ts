@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EVENTS} from "../../eventslist";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {Event} from "../../Event";

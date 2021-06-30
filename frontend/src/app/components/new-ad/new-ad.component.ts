@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Ad} from "../../Ad";
-import {ADS} from "../../adslist";
-import {Event} from "../../Event";
+import {AdvertisementService} from "../../services/advertisement.service";
 
 @Component({
   selector: 'app-new-ad',
@@ -10,22 +9,27 @@ import {Event} from "../../Event";
 })
 export class NewAdComponent implements OnInit {
   ad: Ad;
-  ads: Ad[];
+  ads!: Ad[];
 
-  thisBusiness : string;
+  thisBusiness : number;
 
-  constructor() {
+  constructor(private adService : AdvertisementService) {
     this.ad = new Ad();
-    this.ads = ADS;
 
-    this.thisBusiness = "Estudio 22"
+    this.thisBusiness = 1;
   }
 
   ngOnInit(): void {
+    this.getAds();
   }
 
+  getAds() : void{
+    this.adService.getAdvertisements().subscribe(ads => this.ads = ads);
+  }
+
+
   save(ad : Ad) : void{
-    this.ads.push(this.ad);
+    this.adService.createAdvertisement(ad);
   }
 
 }

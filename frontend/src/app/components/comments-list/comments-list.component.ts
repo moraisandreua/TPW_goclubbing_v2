@@ -3,8 +3,7 @@ import {Comment} from "../../Comment";
 import {Event} from "../../Event";
 import {Business} from "../../Business";
 import {COMMENTS} from "../../commentslist";
-import {BUSINESS} from "../../businesslist";
-import {EVENTS} from "../../eventslist";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-comments-list',
@@ -13,19 +12,23 @@ import {EVENTS} from "../../eventslist";
 })
 export class CommentsListComponent implements OnInit {
   comments: Comment[];
-  events: Event[];
+  events!: Event[];
   //profile: Business;
 
   thisBusiness: number;
 
-  constructor() {
+  constructor(private eventService : EventService) {
     this.comments = COMMENTS;
-    this.events = EVENTS;
     this.thisBusiness = 1;
     //this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {
+    this.getEvents();
+  }
+
+  getEvents(): void{
+    this.eventService.getEvents().subscribe(events => this.events = events)
   }
 
   getEvent(id : number) : any{

@@ -1,5 +1,4 @@
 import {Comment} from "./Comment";
-import {EVENTS} from "./eventslist";
 
 export const COMMENTS: Comment[] = [
   {id:1, classification:4, body:"Adorei!", event:1},
