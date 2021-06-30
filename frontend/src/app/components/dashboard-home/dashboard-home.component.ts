@@ -31,12 +31,13 @@ export class DashboardHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.verifySession();
-    if(this.cookieService.get("goclubbingLoginCookie") != "" ){
+    if(this.cookieService.get("goclubbingLoginCookie") != ""){ // TODO : && this.verifySession() not working, too slow
       this.getEvents();
       this.getAds()
       this.getComments();
       this.getMyBusiness(this.thisBusiness);
     } else{
+      console.log("yet false");
       this.router.navigate(["/login"]);
     }
   }
@@ -44,6 +45,7 @@ export class DashboardHomeComponent implements OnInit {
   verifySession() : any {
     this.authService.verify(this.thisBusiness).subscribe(json => {
       if('message' in json) {
+        console.log("its true!");
         return true;
       } else{
         return false;

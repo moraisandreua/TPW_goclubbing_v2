@@ -3,6 +3,7 @@ import {Event} from "../../Event";
 import {Business} from "../../Business";
 import {EventService} from "../../services/event.service";
 import {BusinessService} from "../../services/business.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-list',
@@ -15,7 +16,7 @@ export class EventListComponent implements OnInit {
   thisBusiness: number;
 
 
-  constructor(private eventService : EventService, private businessService : BusinessService) {
+  constructor(private router: Router, private eventService : EventService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
@@ -33,7 +34,10 @@ export class EventListComponent implements OnInit {
   }
 
   delete(e : Event){
-    this.eventService.deleteEvent(e);
+    this.eventService.deleteEvent(e).subscribe(res => {
+      console.log(res);
+      this.router.navigate(["/dashboard"]);
+    });
   }
 
   private getMyBusiness(thisBusiness: number) : any {
