@@ -4,6 +4,7 @@ import {Location} from "@angular/common";
 import {ADS} from "../../adslist";
 import {Event} from "../../Event"
 import {EVENTS} from "../../eventslist";
+import {Ad} from "../../Ad";
 
 @Component({
   selector: 'app-edit-ad',
@@ -11,7 +12,7 @@ import {EVENTS} from "../../eventslist";
   styleUrls: ['./edit-ad.component.css']
 })
 export class EditAdComponent implements OnInit {
-  @Input() ad: any;
+  @Input() ad!: Ad;
 
   events : Event[];
 
@@ -26,6 +27,7 @@ export class EditAdComponent implements OnInit {
   getAd() : void{
     // @ts-ignore
     const id = +this.route.snapshot.paramMap.get('id');
+    // @ts-ignore
     this.ad = ADS.find(ad => ad.id === id);
   }
 
@@ -36,5 +38,7 @@ export class EditAdComponent implements OnInit {
       }
     }
   }
+
+  delete(ad : Ad) : void{}
 
 }

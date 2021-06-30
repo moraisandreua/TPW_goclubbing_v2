@@ -3,7 +3,7 @@ import {Event} from "../../Event";
 import {EVENTS} from "../../eventslist";
 import {BUSINESS} from "../../businesslist";
 import {Business} from "../../Business";
-import {EventService} from "../../event.service";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-event-list',

@@ -6,7 +6,7 @@ import {Comment} from "../../Comment";
 import {COMMENTS} from "../../commentslist";
 import {Business} from "../../Business";
 import {BUSINESS} from "../../businesslist";
-import {EventService} from "../../event.service";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-dashboard-home',

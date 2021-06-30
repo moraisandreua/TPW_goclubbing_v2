@@ -4,7 +4,7 @@ import * as L from 'leaflet';
 import {Business} from "../../Business";
 import {Event} from "../../Event";
 import {BusinessService} from "../../services/business.service";
-import {EventsService} from "../../services/events.service";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-root',
@@ -24,7 +24,7 @@ export class MainComponent {
   business: Business=new Business();
   eventss: Event[]=[];
 
-  constructor(private businessService:BusinessService, private eventsService:EventsService){
+  constructor(private businessService:BusinessService, private eventsService:EventService){
     this.mapWidth=window.innerWidth;
     this.mapHeight=window.innerHeight;
     this.mapStyle="width:1030; height:81";
@@ -80,7 +80,7 @@ export class MainComponent {
 
     this.eventsService.getEvents().subscribe(e => {
       e.map(ev => {
-        if(ev.business==businessId){
+        if(ev.business.id==businessId){
           this.eventss.push(ev)
         }
       });

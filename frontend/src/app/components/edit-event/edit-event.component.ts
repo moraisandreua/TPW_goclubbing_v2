@@ -3,7 +3,7 @@ import {EVENTS} from "../../eventslist";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {Event} from "../../Event";
-import {EventService} from "../../event.service";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-edit-event',
