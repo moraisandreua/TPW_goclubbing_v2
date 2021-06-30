@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Business} from "../../Business";
 import {BusinessService} from "../../services/business.service";
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-profile',
@@ -13,17 +14,39 @@ export class ProfileComponent implements OnInit {
 
   thisBusiness: number;
 
-  constructor(private router : Router, private businessService : BusinessService) {
+  constructor(private router : Router, private cookieService : CookieService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
-    this.getMyBusiness(this.thisBusiness);
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
+      this.getMyBusiness(this.thisBusiness);
+    } else{
+      this.router.navigate(["/login"]);
+    }
+
   }
 
   getMyBusiness(thisBusiness: number) : any{
     this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0]);
   }
+
+  getBase64(file: any) : any{
+    console.log(file);
+    let reader = new FileReader();
+    if(file)
+      reader.readAsDataURL(file);
+    reader.onload = function () {
+      //me.modelvalue = reader.result;
+      console.log(reader.result);
+      return reader.result;
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+      return "null";
+    };
+  }
+
 
   save(profile : Business) : void{
     this.businessService.updateBusiness(profile).subscribe(answer => {

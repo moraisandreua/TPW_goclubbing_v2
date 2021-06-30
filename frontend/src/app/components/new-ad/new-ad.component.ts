@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Ad} from "../../Ad";
 import {AdvertisementService} from "../../services/advertisement.service";
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-new-ad',
@@ -14,14 +15,18 @@ export class NewAdComponent implements OnInit {
 
   thisBusiness : number;
 
-  constructor(private router : Router, private adService : AdvertisementService) {
+  constructor(private router : Router, private cookieService : CookieService, private adService : AdvertisementService) {
     this.ad = new Ad();
 
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
-    this.getAds();
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
+      this.getAds();
+    } else{
+      this.router.navigate(["/login"]);
+    }
   }
 
   getAds() : void{

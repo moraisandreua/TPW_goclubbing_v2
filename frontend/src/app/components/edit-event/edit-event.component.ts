@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {Event} from "../../Event";
 import {EventService} from "../../services/event.service";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-edit-event',
@@ -12,10 +13,14 @@ import {EventService} from "../../services/event.service";
 export class EditEventComponent implements OnInit {
   @Input() event!: Event;
 
-  constructor(private router : Router, private route: ActivatedRoute, private location: Location, private eventService : EventService) {}
+  constructor(private router : Router, private route: ActivatedRoute, private cookieService : CookieService, private location: Location, private eventService : EventService) {}
 
   ngOnInit(): void {
-    this.getEvent();
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
+      this.getEvent();
+    } else{
+      this.router.navigate(["/login"]);
+    }
   }
 
   getEvent() : void{

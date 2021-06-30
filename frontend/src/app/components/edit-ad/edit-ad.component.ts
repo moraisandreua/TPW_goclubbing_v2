@@ -5,6 +5,7 @@ import {Event} from "../../Event"
 import {Ad} from "../../Ad";
 import {EventService} from "../../services/event.service";
 import {AdvertisementService} from "../../services/advertisement.service";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-edit-ad',
@@ -16,12 +17,16 @@ export class EditAdComponent implements OnInit {
 
   events!: Event[];
 
-  constructor(private router : Router, private route: ActivatedRoute, private location: Location, private eventService : EventService, private adService : AdvertisementService) {
+  constructor(private router : Router, private route: ActivatedRoute, private cookieService : CookieService, private location: Location, private eventService : EventService, private adService : AdvertisementService) {
   }
 
   ngOnInit(): void {
-    this.getEvents()
-    this.getAd();
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
+      this.getEvents()
+      this.getAd();
+    } else{
+      this.router.navigate(["/login"]);
+    }
   }
 
   getEvents(): void{

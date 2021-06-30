@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Event} from "../../Event";
 import {EventService} from "../../services/event.service";
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-new-event',
@@ -13,12 +14,15 @@ export class NewEventComponent implements OnInit {
 
   thisBusiness!: number;
 
-  constructor(private router : Router, private eventService : EventService) {
+  constructor(private router : Router, private cookieService : CookieService, private eventService : EventService) {
     this.event = new Event();
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
+    if(this.cookieService.get("goclubbingLoginCookie") == "" ) {
+      this.router.navigate(["/login"]);
+    }
   }
 
   save(e : Event) : void{

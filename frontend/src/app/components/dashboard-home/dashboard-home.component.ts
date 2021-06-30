@@ -87,7 +87,10 @@ export class DashboardHomeComponent implements OnInit {
   }
 
   delete(comment : Comment){
-    this.commentService.deleteComment(comment);
+    this.commentService.deleteComment(comment).subscribe(res => {
+      console.log(res);
+      this.router.navigate(["/dashboard"]);
+    });
   }
 
 }

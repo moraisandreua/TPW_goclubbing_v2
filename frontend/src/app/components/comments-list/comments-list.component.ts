@@ -5,6 +5,8 @@ import {Business} from "../../Business";
 import {EventService} from "../../services/event.service";
 import {CommentService} from "../../services/comment.service";
 import {BusinessService} from "../../services/business.service";
+import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-comments-list',
@@ -18,14 +20,18 @@ export class CommentsListComponent implements OnInit {
 
   thisBusiness: number;
 
-  constructor(private eventService : EventService, private commentService : CommentService, private businessService : BusinessService) {
+  constructor(private router : Router, private cookieService : CookieService, private eventService : EventService, private commentService : CommentService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
-    this.getEvents();
-    this.getComments();
-    this.getMyBusiness(this.thisBusiness);
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
+      this.getEvents();
+      this.getComments();
+      this.getMyBusiness(this.thisBusiness);
+    } else{
+      this.router.navigate(["/login"]);
+    }
   }
 
   getComments(){
@@ -49,6 +55,9 @@ export class CommentsListComponent implements OnInit {
   }
 
   delete(comment : Comment){
-    this.commentService.deleteComment(comment);
+    this.commentService.deleteComment(comment).subscribe(res => {
+      console.log(res);
+      this.router.navigate(["/dashboard"]);
+    });
   }
 }

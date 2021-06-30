@@ -56,6 +56,9 @@ export class AdsListComponent implements OnInit {
   }
 
   delete(ad : Ad) {
-    this.adService.deleteAdvertisement(ad);
+    this.adService.deleteAdvertisement(ad).subscribe(res => {
+      console.log(res);
+      this.router.navigate(["/dashboard"]);
+    });
   }
 }

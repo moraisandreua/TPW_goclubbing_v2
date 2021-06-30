@@ -4,6 +4,7 @@ import {Business} from "../../Business";
 import {EventService} from "../../services/event.service";
 import {BusinessService} from "../../services/business.service";
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-event-list',
@@ -16,13 +17,17 @@ export class EventListComponent implements OnInit {
   thisBusiness: number;
 
 
-  constructor(private router: Router, private eventService : EventService, private businessService : BusinessService) {
+  constructor(private router: Router, private cookieService: CookieService, private eventService : EventService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
-    this.getEvents();
-    this.getMyBusiness(this.thisBusiness);
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
+      this.getEvents();
+      this.getMyBusiness(this.thisBusiness);
+    } else{
+      this.router.navigate(["/login"]);
+    }
   }
 
   getEvents(): any{
