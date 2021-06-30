@@ -14,9 +14,9 @@ export class EventService {
   private baseURL = 'http://mike19.pythonanywhere.com/'
   constructor(private http : HttpClient) { }
 
-  getEvent(id : number) : Observable<Event>{
+  getEvent(id : number) : Observable<Event[]>{
     const url = this.baseURL + 'api/events/search?id=' + id;
-    return this.http.get<Event>(url)
+    return this.http.get<Event[]>(url);
   }
 
   getEvents() : Observable<Event[]>{
