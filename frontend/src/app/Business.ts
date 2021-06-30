@@ -10,7 +10,7 @@ export class Business{
   opening_hours!: string;
   contact_email!: string;
   contact_phone !: number;
-  //user!: OneToOneField(User)
-  //profilePhoto!: img (?)
+  user!: number
+  profilePhoto!: string;
   //businessPhoto!: img (?)
 }

@@ -9,14 +9,47 @@
     </div>
   </div>
   <div class="content">
-    <div id="mymap" class="mapdivv"></div>
-    {{ mapWidth }} {{ mapHeight }}
+    <div id="mymap" class="mapdiv"></div>
+
+    <div id="modal" class="modal">
+      <div class="info">
+        <div class="infoPic">
+          <img src="businessFoto"/>
+        </div>
+        <div class="infoText">
+          <div class="infoTextName"><b>{{ business.name }}</b></div>
+          <div class="infoTextName">{{ business.type }}</div>
+        </div>
+      </div>
+      <div class="modalImages" ><!-- *ngFor="let image of businessPhoto" -->
+        <img src="imagem"/>
+      </div>
+      <div class="ModalTitle">
+        Events:
+      </div>
+      <div class="modalEvents" *ngFor=" let e of eventss">
+        <div class="modalEvent">
+          <div class="modalEventImages" ><!-- *ngFor="let im of e['images']" -->
+            <img src="../"/>
+          </div>
+          <div class="modalEventTitle">
+            {{ e.name }} ({{ e.min_age }}+)
+          </div>
+          <div class="modalEventTitle">
+            <img src="../../../assets/img/schedule.png"/>{{ e.datetime }}
+          </div>
+          <div class="modalEventTitle">
+            <img src="../../../assets/img/location.png"/>{{ e.location }}
+          </div>
+          <div class="modalEventTitle">
+            <img src="../../../assets/img/theme.png"/>{{ e.theme }}
+          </div>
+          <div class="modalEventTitle">
+            <img src="../../../assets/img/dress-code.png"/>{{ e.dress_code }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<style>
-  .mapdivv{
-    width:100%;
-    height: calc(100vh - 81px);
-  }
-</style>
 <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />-->

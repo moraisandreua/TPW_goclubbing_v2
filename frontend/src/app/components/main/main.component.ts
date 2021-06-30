@@ -1,6 +1,10 @@
 import { Component, Directive } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import * as L from 'leaflet';
+import {Business} from "../../Business";
+import {Event} from "../../Event";
+import {BusinessService} from "../../services/business.service";
+import {EventsService} from "../../services/events.service";
 
 @Component({
   selector: 'app-root',
@@ -15,7 +19,12 @@ export class MainComponent {
   mapStyle:string;
   map: any;
 
-  constructor(){
+  modalOpen:boolean=false;
+  businesses: Business[]=[];
+  business: Business=new Business();
+  eventss: Event[]=[];
+
+  constructor(private businessService:BusinessService, private eventsService:EventsService){
     this.mapWidth=window.innerWidth;
     this.mapHeight=window.innerHeight;
     this.mapStyle="width:1030; height:81";
@@ -36,16 +45,45 @@ export class MainComponent {
     tiles.addTo(this.map);
   }
 
-  public addMarker = (lat:number, long:number, descricao:string) => {
-    var marker = L.marker([lat, long]).addTo(this.map).bindPopup(descricao);
+  public addMarker = (id:number, lat:number, long:number, descricao:string) => {
+    var marker = L.marker([lat, long]).addTo(this.map).bindPopup(descricao).on("click", () => {
+      this.getBusiness(id);
+    });
   }
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.getBusinesses();
     //this.mapHeight=(document.getElementById("navbar") as HTMLElement).clientHeight;
     //this.mapStyle="width: "+ this.mapWidth + "; height: " + this.mapHeight;
-    this.addMarker(41.111639, -8.647544,"Minha casa")
-    this.addMarker(41.096055, -8.656618,"Casa casa")
+    //this.addMarker(41.111639, -8.647544,"Minha casa")
+    //this.addMarker(41.096055, -8.656618,"Casa casa")
   }
 
+  getBusinesses():void{
+    this.businessService.getBusinesses().subscribe(b => {
+      this.businesses=b;
+      b.map(bus => this.addMarker(bus.id, bus.lat, bus.lng, bus.name));
+    });
+  }
+
+  getBusiness(id:number):void{
+    this.businessService.getBusiness(id).subscribe(b => {
+      this.business=b[0]; // apesar de ser um array só é retornado uma valor
+      (document.getElementById("modal") as HTMLElement).style.display="block";
+      this.getEvents(b[0].id);
+    });
+  }
+
+  getEvents(businessId:number):void{
+    this.eventss=[]; // clear data
+
+    this.eventsService.getEvents().subscribe(e => {
+      e.map(ev => {
+        if(ev.business==businessId){
+          this.eventss.push(ev)
+        }
+      });
+    });
+  }
 }
