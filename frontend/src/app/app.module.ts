@@ -16,6 +16,7 @@ import { EditAdComponent } from './components/edit-ad/edit-ad.component';
 import { NewEventComponent } from './components/new-event/new-event.component';
 import { NewAdComponent } from './components/new-ad/new-ad.component';
 import {MainComponent} from "./components/main/main.component";
+import {LoginComponent} from "./components/login/login.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {MainComponent} from "./components/main/main.component";
     EditAdComponent,
     NewEventComponent,
     NewAdComponent,
-    MainComponent
+    MainComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
