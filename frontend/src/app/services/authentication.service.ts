@@ -33,7 +33,7 @@ export class AuthenticationService {
   verify(id : number) : Observable<JSON>{
     const url = "http://mike19.pythonanywhere.com/api/verify/" + id;
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authorization':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.get<JSON>(url, httpOptions);
   }

@@ -24,7 +24,7 @@ export class EventService {
   createEvent(event : Event): Observable<any>{
     const url = this.baseURL + 'api/create/event';
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authorization':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.post(url, event, httpOptions);
   }
@@ -32,7 +32,7 @@ export class EventService {
   updateEvent(event: Event): Observable<any>{
     const url = this.baseURL + 'api/update/event';
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authorization':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.put(url, event, httpOptions);
   }
@@ -40,7 +40,7 @@ export class EventService {
   deleteEvent(event: Event): Observable<any>{
     const url = this.baseURL + 'api/delete/event/' + event.id;
     let httpOptions = {
-      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authentication':"Token " + this.cookieService.get("goclubbingLoginCookie")})
+      headers : new HttpHeaders({'Content-Type': 'application/json', 'Authorization':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.delete<Event>(url, httpOptions);
   }
