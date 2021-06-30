@@ -35,6 +35,7 @@ export class LoginComponent {
       })).subscribe( res => {
         if("token" in res){
           this.cookieService.set("goclubbingLoginCookie", res.token)
+          localStorage.setItem("goclubbingBusinessID", res.business)
           this.message={"type":"success", "body":"Login successful"};
         }else{
           this.message={"type":"error", "body":res.error};
