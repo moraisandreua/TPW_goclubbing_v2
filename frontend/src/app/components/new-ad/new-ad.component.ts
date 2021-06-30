@@ -16,7 +16,7 @@ export class NewAdComponent implements OnInit {
   constructor(private adService : AdvertisementService) {
     this.ad = new Ad();
 
-    this.thisBusiness = 1;
+    this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {

@@ -10,16 +10,16 @@ import {BUSINESS} from "../../businesslist";
 export class ProfileComponent implements OnInit {
   profile: Business;
 
-  thisBusiness: string;
+  thisBusiness: number;
 
   constructor() {
-    this.thisBusiness = "Estudio 22";  // TODO: Fix this to use businessID
+    this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
     this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);  // TODO: Fix this to use business service
   }
 
-  getMyBusiness(BUSINESS : Business[], thisBusiness: String) : any{
+  getMyBusiness(BUSINESS : Business[], thisBusiness: number) : any{
     for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].name == thisBusiness){
+      if(BUSINESS[i].id == thisBusiness){
         return BUSINESS[i];
       }
     }

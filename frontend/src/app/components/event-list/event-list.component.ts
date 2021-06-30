@@ -16,7 +16,7 @@ export class EventListComponent implements OnInit {
 
 
   constructor(private eventService : EventService) {
-    this.thisBusiness = 1; // TODO : Change this to token
+    this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
     this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 

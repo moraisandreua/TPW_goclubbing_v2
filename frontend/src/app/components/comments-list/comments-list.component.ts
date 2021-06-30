@@ -18,7 +18,7 @@ export class CommentsListComponent implements OnInit {
   thisBusiness: number;
 
   constructor(private eventService : EventService, private commentService : CommentService) {
-    this.thisBusiness = 1; // TODO : Change this to token
+    this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
     //this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 

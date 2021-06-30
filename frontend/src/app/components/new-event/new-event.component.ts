@@ -10,18 +10,18 @@ import {EventService} from "../../services/event.service";
 export class NewEventComponent implements OnInit {
   event: Event;
 
-  profile!: number;
+  thisBusiness!: number;
 
   constructor(private eventService : EventService) {
     this.event = new Event();
-    this.profile = 1 // TODO: Fix this to use businessID
+    this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
 
   ngOnInit(): void {
   }
 
   save(e : Event) : void{
-    this.event.business = this.profile;
+    this.event.business = this.thisBusiness;
     this.eventService.createEvent(e);
   }
 
