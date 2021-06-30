@@ -63,7 +63,7 @@ class EventSerializer(serializers.ModelSerializer):
 class EventTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event_Type
-        fields = 'name'
+        fields = ['name']
 
 
 class EventPhotoSerializer(serializers.ModelSerializer):
