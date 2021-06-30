@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from "../../Event";
-import {BUSINESS} from "../../businesslist";
 import {Business} from "../../Business";
 import {EventService} from "../../services/event.service";
+import {BusinessService} from "../../services/business.service";
 
 @Component({
   selector: 'app-event-list',
@@ -11,17 +11,17 @@ import {EventService} from "../../services/event.service";
 })
 export class EventListComponent implements OnInit {
   events!: Event[];
-  profile: Business;
+  profile!: Business;
   thisBusiness: number;
 
 
-  constructor(private eventService : EventService) {
+  constructor(private eventService : EventService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
-    this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {
     this.getEvents();
+    this.getMyBusiness(this.thisBusiness);
   }
 
   getEvents(): any{
@@ -36,11 +36,7 @@ export class EventListComponent implements OnInit {
     this.eventService.deleteEvent(e);
   }
 
-  private getMyBusiness(BUSINESS: Business[], thisBusiness: number) : any {  // TODO: Fix this to use business service
-    for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].id == thisBusiness){
-        return BUSINESS[i];
-      }
-    }
+  private getMyBusiness(thisBusiness: number) : any {
+    this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0]);
   }
 }

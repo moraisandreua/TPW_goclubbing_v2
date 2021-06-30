@@ -3,10 +3,10 @@ import {Event} from "../../Event";
 import {Ad} from "../../Ad";
 import {Comment} from "../../Comment";
 import {Business} from "../../Business";
-import {BUSINESS} from "../../businesslist";
 import {EventService} from "../../services/event.service";
 import {AdvertisementService} from "../../services/advertisement.service";
 import {CommentService} from "../../services/comment.service";
+import {BusinessService} from "../../services/business.service";
 
 @Component({
   selector: 'app-dashboard-home',
@@ -17,19 +17,19 @@ export class DashboardHomeComponent implements OnInit {
   events!: Event[];
   ads!: Ad[];
   comments!: Comment[];
-  profile: Business;
+  profile!: Business;
 
   thisBusiness: number;
 
-  constructor(private eventService: EventService, private adService : AdvertisementService, private commentService : CommentService) {
+  constructor(private eventService: EventService, private adService : AdvertisementService, private commentService : CommentService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
-    this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {
     this.getEvents();
     this.getAds()
     this.getComments();
+    this.getMyBusiness(this.thisBusiness);
   }
 
   getEvents(): void{
@@ -53,12 +53,8 @@ export class DashboardHomeComponent implements OnInit {
     return false;
   }
 
-  getMyBusiness(BUSINESS : Business[], thisBusiness: number) : any{ // TODO: Fix this to use business service
-    for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].id == thisBusiness){
-        return BUSINESS[i];
-      }
-    }
+  getMyBusiness(thisBusiness: number) : any{
+    this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0]);
   }
 
   getEventFromId(id : number) : any{

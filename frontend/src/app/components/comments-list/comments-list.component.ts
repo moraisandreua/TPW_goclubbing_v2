@@ -4,6 +4,7 @@ import {Event} from "../../Event";
 import {Business} from "../../Business";
 import {EventService} from "../../services/event.service";
 import {CommentService} from "../../services/comment.service";
+import {BusinessService} from "../../services/business.service";
 
 @Component({
   selector: 'app-comments-list',
@@ -13,18 +14,18 @@ import {CommentService} from "../../services/comment.service";
 export class CommentsListComponent implements OnInit {
   comments!: Comment[];
   events!: Event[];
-  //profile: Business;
+  profile!: Business;
 
   thisBusiness: number;
 
-  constructor(private eventService : EventService, private commentService : CommentService) {
+  constructor(private eventService : EventService, private commentService : CommentService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
-    //this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {
     this.getEvents();
     this.getComments();
+    this.getMyBusiness(this.thisBusiness);
   }
 
   getComments(){
@@ -43,12 +44,8 @@ export class CommentsListComponent implements OnInit {
     }
   }
 
-  private getMyBusiness(BUSINESS: Business[], thisBusiness: string) : any { // TODO : Use business service
-    for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].name == thisBusiness){
-        return BUSINESS[i];
-      }
-    }
+  private getMyBusiness(thisBusiness: number) : any {
+    this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0]);
   }
 
   delete(comment : Comment){

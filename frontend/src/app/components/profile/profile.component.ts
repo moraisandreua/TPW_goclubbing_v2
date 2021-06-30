@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Business} from "../../Business";
-import {BUSINESS} from "../../businesslist";
+import {BusinessService} from "../../services/business.service";
 
 @Component({
   selector: 'app-profile',
@@ -8,24 +8,19 @@ import {BUSINESS} from "../../businesslist";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  profile: Business;
+  profile!: Business;
 
   thisBusiness: number;
 
-  constructor() {
+  constructor(private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
-    this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);  // TODO: Fix this to use business service
-  }
-
-  getMyBusiness(BUSINESS : Business[], thisBusiness: number) : any{
-    for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].id == thisBusiness){
-        return BUSINESS[i];
-      }
-    }
   }
 
   ngOnInit(): void {
+    this.getMyBusiness(this.thisBusiness);
   }
 
+  getMyBusiness(thisBusiness: number) : any{
+    this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0])
+  }
 }

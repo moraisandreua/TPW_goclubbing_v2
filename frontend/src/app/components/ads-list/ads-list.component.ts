@@ -4,6 +4,8 @@ import {Business} from "../../Business";
 import {Event} from "../../Event"
 import {EventService} from "../../services/event.service";
 import {AdvertisementService} from "../../services/advertisement.service";
+import {BusinessService} from "../../services/business.service";
+import {profilingEnabled} from "@angular-devkit/build-angular/src/utils/environment-options";
 
 @Component({
   selector: 'app-ads-list',
@@ -13,18 +15,18 @@ import {AdvertisementService} from "../../services/advertisement.service";
 export class AdsListComponent implements OnInit {
   ads!: Ad[];
   events!: Event[]
-  //profile: Business;
+  profile!: Business;
 
   thisBusiness: number;
 
-  constructor(private eventService: EventService, private adService:AdvertisementService) {
+  constructor(private eventService: EventService, private adService:AdvertisementService, private businessService : BusinessService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
-    //this.profile = this.getMyBusiness(BUSINESS, this.thisBusiness);
   }
 
   ngOnInit(): void {
     this.getEvents();
     this.getAds();
+    this.getMyBusiness(this.thisBusiness);
   }
 
   getEvents(): void{
@@ -35,12 +37,8 @@ export class AdsListComponent implements OnInit {
     this.adService.getAdvertisements().subscribe(ads => this.ads = ads);
   }
 
-  private getMyBusiness(BUSINESS: Business[], thisBusiness: number) : any{ // TODO : Change this to use business service
-    for(let i = 0; i < BUSINESS.length; i++){
-      if(BUSINESS[i].id == thisBusiness){
-        return BUSINESS[i];
-      }
-    }
+  private getMyBusiness(thisBusiness: number) : any{
+    this.businessService.getBusiness(thisBusiness).subscribe(profile => this.profile = profile[0]);
   }
 
   getEvent(id : number) : any{
