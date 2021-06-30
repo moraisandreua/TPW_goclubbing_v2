@@ -1,0 +1,8 @@
+#!/Users/miguelmarques/Desktop/Uni/3ºano/2ºSemestre/TPW/TPW_goclubbing_v2/backend/goclubbing/venv/bin/python3.9
+# -*- coding: utf-8 -*-
+import re
+import sys
+from markdown.__main__ import run
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(run())
