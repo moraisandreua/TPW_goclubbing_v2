@@ -14,9 +14,6 @@ import {EventService} from "../../services/event.service";
 
 export class MainComponent {
   title = 'Go Clubbing';
-  mapWidth:number;
-  mapHeight:number;
-  mapStyle:string;
   map: any;
 
   modalOpen:boolean=false;
@@ -24,11 +21,7 @@ export class MainComponent {
   business: Business=new Business();
   eventss: Event[]=[];
 
-  constructor(private businessService:BusinessService, private eventsService:EventService){
-    this.mapWidth=window.innerWidth;
-    this.mapHeight=window.innerHeight;
-    this.mapStyle="width:1030; height:81";
-  }
+  constructor(private businessService:BusinessService, private eventsService:EventService){ }
 
   private initMap(): void {
     this.map = L.map('mymap', {
