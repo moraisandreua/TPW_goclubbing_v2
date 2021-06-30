@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {Event} from "../../Event"
 import {Ad} from "../../Ad";
@@ -16,7 +16,7 @@ export class EditAdComponent implements OnInit {
 
   events!: Event[];
 
-  constructor(private route: ActivatedRoute, private location: Location, private eventService : EventService, private adService : AdvertisementService) {
+  constructor(private router : Router, private route: ActivatedRoute, private location: Location, private eventService : EventService, private adService : AdvertisementService) {
   }
 
   ngOnInit(): void {
@@ -41,8 +41,18 @@ export class EditAdComponent implements OnInit {
     }
   }
 
+  updateAd() : void{
+    this.adService.updateAdvertisement(this.ad).subscribe(answer => {
+      console.log(answer);
+      this.router.navigate(["/dashboard"]);
+    })
+  }
+
   delete() : void{
-    this.adService.deleteAdvertisement(this.ad);
+    this.adService.deleteAdvertisement(this.ad).subscribe(answer => {
+      console.log(answer);
+      this.router.navigate(["/dashboard"]);
+    });;
   }
 
 }

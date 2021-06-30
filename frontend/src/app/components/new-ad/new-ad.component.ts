@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Ad} from "../../Ad";
 import {AdvertisementService} from "../../services/advertisement.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-ad',
@@ -13,7 +14,7 @@ export class NewAdComponent implements OnInit {
 
   thisBusiness : number;
 
-  constructor(private adService : AdvertisementService) {
+  constructor(private router : Router, private adService : AdvertisementService) {
     this.ad = new Ad();
 
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
@@ -29,7 +30,10 @@ export class NewAdComponent implements OnInit {
 
 
   save(ad : Ad) : void{
-    this.adService.createAdvertisement(ad);
+    this.adService.createAdvertisement(ad).subscribe(answer =>{
+      console.log(answer);
+      this.router.navigate(["/dashboard"]);
+    });
   }
 
 }

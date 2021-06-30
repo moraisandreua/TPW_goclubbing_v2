@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from "../../Event";
 import {EventService} from "../../services/event.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-event',
@@ -12,7 +13,7 @@ export class NewEventComponent implements OnInit {
 
   thisBusiness!: number;
 
-  constructor(private eventService : EventService) {
+  constructor(private router : Router, private eventService : EventService) {
     this.event = new Event();
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
   }
@@ -22,7 +23,10 @@ export class NewEventComponent implements OnInit {
 
   save(e : Event) : void{
     this.event.business = this.thisBusiness;
-    this.eventService.createEvent(e);
+    this.eventService.createEvent(e).subscribe(answer =>{
+      console.log(answer);
+      this.router.navigate(["/dashboard"]);
+    });
   }
 
 }
