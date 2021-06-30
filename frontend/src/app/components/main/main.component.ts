@@ -14,21 +14,15 @@ import {EventsService} from "../../services/events.service";
 
 export class MainComponent {
   title = 'Go Clubbing';
-  mapWidth:number;
-  mapHeight:number;
-  mapStyle:string;
   map: any;
 
-  modalOpen:boolean=false;
+  modalFilterOpen:boolean=false;
+  modalEventOpen:boolean=false;
   businesses: Business[]=[];
   business: Business=new Business();
   eventss: Event[]=[];
 
-  constructor(private businessService:BusinessService, private eventsService:EventsService){
-    this.mapWidth=window.innerWidth;
-    this.mapHeight=window.innerHeight;
-    this.mapStyle="width:1030; height:81";
-  }
+  constructor(private businessService:BusinessService, private eventsService:EventsService){ }
 
   private initMap(): void {
     this.map = L.map('mymap', {
@@ -54,10 +48,6 @@ export class MainComponent {
   ngAfterViewInit(): void {
     this.initMap();
     this.getBusinesses();
-    //this.mapHeight=(document.getElementById("navbar") as HTMLElement).clientHeight;
-    //this.mapStyle="width: "+ this.mapWidth + "; height: " + this.mapHeight;
-    //this.addMarker(41.111639, -8.647544,"Minha casa")
-    //this.addMarker(41.096055, -8.656618,"Casa casa")
   }
 
   getBusinesses():void{
@@ -70,7 +60,7 @@ export class MainComponent {
   getBusiness(id:number):void{
     this.businessService.getBusiness(id).subscribe(b => {
       this.business=b[0]; // apesar de ser um array só é retornado uma valor
-      (document.getElementById("modal") as HTMLElement).style.display="block";
+      this.showBusinessModal(true);
       this.getEvents(b[0].id);
     });
   }
@@ -86,4 +76,14 @@ export class MainComponent {
       });
     });
   }
+
+  showFilterModal():void{
+    this.modalFilterOpen=!this.modalFilterOpen;
+  }
+
+  showBusinessModal(v:boolean):void{
+    this.modalEventOpen=v;
+  }
+
+  
 }
