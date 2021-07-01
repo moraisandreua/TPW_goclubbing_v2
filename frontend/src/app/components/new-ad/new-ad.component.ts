@@ -26,15 +26,10 @@ export class NewAdComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
-      this.getAds();
       this.getMyEvents();
     } else{
       this.router.navigate(["/login"]);
     }
-  }
-
-  getAds() : void{
-    this.adService.getAdvertisements().subscribe(ads => this.ads = ads);
   }
 
   getMyEvents() : void{

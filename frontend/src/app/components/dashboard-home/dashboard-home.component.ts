@@ -37,7 +37,6 @@ export class DashboardHomeComponent implements OnInit {
       this.getComments();
       this.getMyBusiness(this.thisBusiness);
     } else{
-      console.log("yet false");
       this.router.navigate(["/login"]);
     }
   }
@@ -45,7 +44,6 @@ export class DashboardHomeComponent implements OnInit {
   verifySession() : any {
     this.authService.verify(this.thisBusiness).subscribe(json => {
       if('message' in json) {
-        console.log("its true!");
         return true;
       } else{
         return false;
@@ -54,20 +52,53 @@ export class DashboardHomeComponent implements OnInit {
   }
 
   getEvents(): void{
-    this.eventService.getEvents().subscribe(events => this.events = events)
+    this.eventService.getEvents().subscribe(events => {
+      events.map(event => {
+        if(event.business == this.thisBusiness){
+          if(this.events) {
+            this.events.push(event);
+          } else{
+            this.events = [event];
+          }
+        }
+      });
+
+    });
   }
 
   getAds() : void{
-    this.adService.getAdvertisements().subscribe(ads => this.ads = ads);
+    this.adService.getAdvertisements().subscribe(ads => {
+      ads.map(ad => {
+        if(this.events.map(event => event.id).indexOf(ad.event) != -1){
+          if(this.ads) {
+            this.ads.push(ad);
+          } else{
+            this.ads = [ad];
+          }
+        }
+      });
+
+    });
   }
 
   getComments() : void{
-    this.commentService.getComments().subscribe(comments => this.comments = comments );
+    this.commentService.getComments().subscribe(comments => {
+      comments.map(comment => {
+        if(this.events.map(event => event.id).indexOf(comment.event) != -1){
+          if(this.comments) {
+            this.comments.push(comment);
+          } else{
+            this.comments = [comment];
+          }
+        }
+      });
+
+    });
   }
 
   isMyEvent(id :number) : boolean{
     for(let i = 0; i < this.events.length; i++){
-      if(this.events[i].id == id && this.events[i].business == this.thisBusiness){
+      if(this.events[i].id == id){
         return true;
       }
     }

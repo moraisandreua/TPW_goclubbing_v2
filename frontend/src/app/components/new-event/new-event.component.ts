@@ -32,6 +32,7 @@ export class NewEventComponent implements OnInit {
   getTypes() : void{
     this.eventService.getEventTypes().subscribe(types => {
       this.types = types;
+      console.log(this.types);
     });
   }
 

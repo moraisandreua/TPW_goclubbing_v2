@@ -19,7 +19,7 @@ export class AdvertisementService {
 
   getAdvertisements() : Observable<Ad[]>{
     const url = this.baseURL + 'api/advertisements/all';
-    return this.http.get<Ad[]>(url)
+    return this.http.get<Ad[]>(url);
   }
 
   createAdvertisement(ad : Ad): Observable<any>{

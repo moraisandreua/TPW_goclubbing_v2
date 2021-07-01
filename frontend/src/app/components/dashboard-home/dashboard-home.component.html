@@ -17,8 +17,8 @@
       <h1 style="float:left;">Events </h1>
       <a style="float:right; color: white" routerLink="/dashboard/newevent" ><i class="mysmalls fa fa-plus"></i></a>
     </div>
-    <div class="events-content" *ngFor="let event of events">
-      <div class="pub" *ngIf="event.business == thisBusiness">
+    <div class="events-content" >
+      <div class="pub" *ngFor="let event of events">
         <div>
           <p class="fa" style="font-weight: bold">{{ event.name }}</p>
           <a [routerLink]="['/dashboard/event', event.id]"><i style="color:black;" class="fa fa-pencil"></i></a>
@@ -36,8 +36,8 @@
       <h1 style="float: left">Ads</h1>
       <a style="float:right; color: white" routerLink="/dashboard/newad" ><i class="mysmalls fa fa-plus"></i></a>
     </div>
-    <div class="pubs-content" *ngFor="let ad of ads">
-      <div class="pub" *ngIf="isMyEvent(ad.event)">
+    <div class="pubs-content" >
+      <div class="pub" *ngFor="let ad of ads">
         <div>
           <p class="fa" style="font-weight: bold">{{ getEventFromId(ad.event).name}} Add</p>
           <a [routerLink]="['/dashboard/ad', ad.id]"><i style="color: black;" class="fa fa-pencil"></i></a>
@@ -45,7 +45,7 @@
           <p class="grey">{{ ad.body }}</p>
           <p style="text-align: center"><i class="fa fa-heart"></i> 278</p>
         </div>
-      </div>
+        </div>
     </div>
     <img class="background-image" src="assets/img/DashBoardFundo3.png"/>
   </div>
@@ -67,16 +67,16 @@
       <h1>Comments</h1>
     </div>
     <div class="comments-content" *ngFor="let comment of comments">
-      <div class="comment" *ngIf="isMyEvent(comment.event)">
-        <p style="font-weight: bold;margin-left: 4%">Comment in {{ getEventFromId(comment.event).name }} <a (click)="delete(comment)"><i style="color:black;" class="fa fa-trash"></i></a></p>
-        <p style="margin-left: 2.5%">
+      <div class="comment">
+        <p style="font-weight: bold;margin-left: 4%; margin-top: 1vh">Comment in {{ getEventFromId(comment.event).name }} <a (click)="delete(comment)"><i style="color:black; float:right; margin-right: 3vw; padding-top: 1vh;" class="fa fa-trash"></i></a></p>
+        <p style="margin-left: 4%; margin-top: -2vh;">
           <i *ngIf="comment.classification == 1 || comment.classification > 1" class="fa fa-star"></i>
           <i *ngIf="comment.classification == 2 || comment.classification > 2" class="fa fa-star"></i>
           <i *ngIf="comment.classification == 3 || comment.classification > 3" class="fa fa-star"></i>
           <i *ngIf="comment.classification == 4 || comment.classification > 4" class="fa fa-star"></i>
           <i *ngIf="comment.classification == 5 || comment.classification > 5" class="fa fa-star"></i>
         </p>
-        <p class="grey" style="margin-top: -14%; margin-left: 4%">{{ comment.body}}</p>
+        <p class="grey" style="margin-top:-3vh; margin-left: 4%">{{ comment.body}}</p>
       </div>
     </div>
     <img class="background-image" src="assets/img/DashBoardFundo2.png"/>
