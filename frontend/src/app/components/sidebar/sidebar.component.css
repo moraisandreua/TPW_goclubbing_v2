@@ -380,6 +380,7 @@ h1{
 .exit-btn{
   color: wheat !important;
   text-decoration: none;
+  cursor: pointer;
 }
 .edit-button{
   background-color: transparent;
