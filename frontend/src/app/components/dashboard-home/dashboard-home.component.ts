@@ -27,6 +27,15 @@ export class DashboardHomeComponent implements OnInit {
 
   constructor(private router : Router, private authService : AuthenticationService, private eventService: EventService, private adService : AdvertisementService, private commentService : CommentService, private businessService : BusinessService, private cookieService : CookieService) {
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
+    this.verifySession();
+    if(this.cookieService.get("goclubbingLoginCookie") != ""){ // TODO : && this.verifySession() not working, too slow
+      this.getEvents();
+      this.getAds()
+      this.getComments();
+      this.getMyBusiness(this.thisBusiness);
+    } else{
+      this.router.navigate(["/login"]);
+    }
   }
 
   ngOnInit(): void {

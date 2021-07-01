@@ -276,7 +276,7 @@ h1{
   white-space: nowrap;
   position: relative;
   flex-direction: row;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
   scroll-behavior: smooth;
   height: 100%;
@@ -287,7 +287,7 @@ h1{
 
 .profile{
   height: 90%;
-  width: 37vw;
+  width: 35vw;
   background-color: #FFC2B4;
   display: inline-block;
   margin-left: 1vw;

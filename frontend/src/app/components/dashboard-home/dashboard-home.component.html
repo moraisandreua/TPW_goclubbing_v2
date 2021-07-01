@@ -52,7 +52,7 @@
   <div class="profiles">
     <div class="title">
       <h1 style="display: inline-block">Profile</h1>
-      <a class="edit-button" routerLink="/dashboard/profile"><i class="fa fa-pencil"></i></a>
+      <a class="edit-button" routerLink="/dashboard/profile"><i style="float:right; margin-right: 2vw; font-size: 3.6vh" class="fa fa-pencil"></i></a>
     </div>
     <div class="profile-content">
       <div class="profile">
@@ -66,8 +66,8 @@
     <div class="title">
       <h1>Comments</h1>
     </div>
-    <div class="comments-content" *ngFor="let comment of comments">
-      <div class="comment">
+    <div class="comments-content" >
+      <div class="comment" *ngFor="let comment of comments">
         <p style="font-weight: bold;margin-left: 4%; margin-top: 1vh">Comment in {{ getEventFromId(comment.event).name }} <a (click)="delete(comment)"><i style="color:black; float:right; margin-right: 3vw; padding-top: 1vh;" class="fa fa-trash"></i></a></p>
         <p style="margin-left: 4%; margin-top: -2vh;">
           <i *ngIf="comment.classification == 1 || comment.classification > 1" class="fa fa-star"></i>
