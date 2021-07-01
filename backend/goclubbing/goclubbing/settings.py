@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_extra_fields',
     'rest_framework.authtoken',
-    'rest_auth'
+    'rest_auth',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +73,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                        'staticfiles': 'django.templatetags.static',
+                    },
         },
+
     },
 ]
 
@@ -135,7 +140,9 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
             'rest_framework.authentication.TokenAuthentication',
-    ]
+            'rest_framework.authentication.SessionAuthentication'
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 # CORS (Cross Origin Resource Sharing) config
@@ -143,5 +150,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 MEDIA_URL = ''
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
+
+LOGIN_URL = 'rest_framework:login'
+LOGOUT_URL = 'rest_framework:logout'
+
+
+
+
 
 

@@ -20,10 +20,12 @@ from django.urls import include, path
 
 from app import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.schema_view),
+    path('', include('rest_framework.urls', namespace='rest_framework')),
     path('api/business/all', views.get_all_businesses),
-    path('api/business/events/<int:obj_id>', views.get_businesses_events),
     path('api/business/types', views.get_business_types),
     path('api/events/all', views.get_all_events),
     path('api/events/types', views.get_event_types),
@@ -46,13 +48,14 @@ urlpatterns = [
     path('api/delete/event/<int:obj_id>', views.del_event),
     path('api/update/event/', views.update_event),
     path('api/create/comment', views.create_comment),
-    path('api/delete/comment/<int:obj_id>', views.del_event),
-    path('api/update/comment/', views.del_business),
+    path('api/delete/comment/<int:obj_id>', views.del_comment),
+    path('api/update/comment/', views.update_comment),
     path('api/create/advertisement', views.create_advertisement),
     path('api/delete/advertisement/<int:obj_id>', views.del_advertisement),
-    path('api/update/advertisement/', views.del_business),
+    path('api/update/advertisement/', views.update_advertisement),
     path('api/create/business_photo', views.create_business_photo),
     path('api/create/event_photo', views.create_event_photo),
     path('api/login/', views.login),
+    path('api/verify/<int:obj_id>', views.verify),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

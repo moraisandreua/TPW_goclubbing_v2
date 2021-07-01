@@ -4,15 +4,18 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.files import File
 from django.core.files.base import ContentFile
+from django.db import IntegrityError
 from django.db.models import FileField
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes, renderer_classes
+from rest_framework import status, schemas
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
+
 from app.models import Business, BusinessPhoto, Event, EventPhoto, Event_Type, Comment, Advertisement
 from app.serializers import BusinessSerializer, BusinessPhotoSerializer, EventSerializer, EventTypeSerializer, \
     EventPhotoSerializer, CommentSerializer, AdvertisementSerializer, UserSerializer
@@ -304,14 +307,22 @@ def get_users_by_id(request, obj_id):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def create_business(request):
+    try:
+        user = User.objects.create_user(username=request.data["username"], password=request.data["password"])
+        user.save()
 
-    user = User.objects.create(username=request.data["username"], password=request.data["password"])
-    request.data["user"] = user.id
-    serializer = BusinessSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
+        business = Business(name=request.data["name"], location=request.data["location"],
+                            type=request.data["type"], company_name=request.data["company_name"],
+                            contact_email=request.data["contact_email"], contact_phone=request.data["contact_phone"],
+                            user=user)
+        business.save()
+        serializer = BusinessSerializer(business)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except IntegrityError as e:
+        msg = {
+            "error": "Username already exists!"
+        }
+        return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -521,10 +532,39 @@ def login(request):
         return Response({'error': 'Please provide both username and password'},
                         status=status.HTTP_400_BAD_REQUEST)
     user = authenticate(username=username, password=password)
+
     if not user:
         return Response({'error': 'Invalid Credentials'},
                         status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        business = Business.objects.get(user=user)
+    except Business.DoesNotExist as e:
+        return Response({'error': "User doesnt have a business!"},
+                        status=status.HTTP_404_NOT_FOUND)
+
     token, _ = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key},
+    return Response({'token': token.key, 'business': business.id},
                     status=status.HTTP_200_OK)
+
+
+@csrf_exempt
+@api_view(["GET"])
+@permission_classes((AllowAny,))
+def verify(request, obj_id):
+    try:
+        business = Business.objects.get(id=obj_id)
+        if request.user != business.user:
+            return Response({'error': "Users dont match!"}, status=status.HTTP_400_BAD_REQUEST)
+    except Business.DoesNotExist:
+        return Response({'error': "Business doesnt exist!"}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'message': "Users match!"}, status=status.HTTP_200_OK)
+
+
+@api_view()
+@renderer_classes([SwaggerUIRenderer, OpenAPIRenderer])
+@permission_classes((AllowAny,))
+def schema_view(request):
+    generator = schemas.SchemaGenerator(title='GoClubbing API')
+    return Response(generator.get_schema(request=request))
 
