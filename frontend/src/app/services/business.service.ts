@@ -5,6 +5,8 @@ import {Business} from "../Business";
 import {Event} from "../Event";
 import {CookieService} from "ngx-cookie-service";
 
+import {BusinessPhotos} from "../BusinessPhotos";
+import {BusinessType} from "../BusinessType";
 
 
 @Injectable({
@@ -12,6 +14,8 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class BusinessService {
   private baseUrl = "http://mike19.pythonanywhere.com/";
+  private photosBaseUrl = "http://mike19.pythonanywhere.com/api/business_photos/";
+  private typesBaseUrl = "http://mike19.pythonanywhere.com/api/business/types";
 
   constructor(private http: HttpClient, private cookieService : CookieService) {
 
@@ -49,5 +53,20 @@ export class BusinessService {
       headers : new HttpHeaders({'Content-Type': 'application/json', 'Authorization':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.delete<Event>(url, httpOptions);
+  }
+  
+  getBusinessPhotos(id:number):Observable<BusinessPhotos[]>{
+    const url = this.photosBaseUrl+id;
+    return this.http.get<BusinessPhotos[]>(url);
+  }
+
+  getFilteredBusinesses(queryString:string):Observable<Business[]>{
+    const url = this.baseUrl + "api/business/search" + queryString;
+    return this.http.get<Business[]>(url);
+  }
+
+  getBusinessesTypes():Observable<BusinessType[]>{
+    const url = this.typesBaseUrl;
+    return this.http.get<BusinessType[]>(url);
   }
 }

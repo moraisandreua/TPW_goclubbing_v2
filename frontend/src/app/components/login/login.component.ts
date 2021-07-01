@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import { catchError } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
+import {Router} from "@angular/router";
 import { of } from 'rxjs';
 import {CookieService} from "ngx-cookie-service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -38,7 +37,9 @@ export class LoginComponent {
           this.cookieService.set("goclubbingLoginCookie", res.token)
           localStorage.setItem("goclubbingBusinessID", res.business)
           this.message={"type":"success", "body":"Login successful"};
-          this.router.navigate(["/dashboard"]);
+          setTimeout(() => {
+            this.router.navigate(["/dashboard"]);
+          }, 750)
         }else{
           this.message={"type":"error", "body":res.error};
         }

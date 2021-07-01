@@ -4,6 +4,7 @@ import { Observable } from "rxjs/internal/Observable";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {Event_Type} from "../Event_Type";
+import {EventPhotos} from "../EventPhotos";
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,15 @@ export class EventService {
   getEventTypes() : Observable<Event_Type[]>{
     const url = this.baseURL + 'api/events/types';
     return this.http.get<Event_Type[]>(url)
+  }
+
+  getEventPhotos(id:number):Observable<EventPhotos[]>{
+    const url=this.baseURL + "api/event_photos/" + id;
+    return this.http.get<EventPhotos[]>(url);
+  }
+
+  getFilteredEvents(queryString:string):Observable<Event[]>{
+    const url=this.baseURL + "api/events/search" + queryString;
+    return this.http.get<Event[]>(url);
   }
 }
