@@ -3,6 +3,8 @@ import {Ad} from "../../Ad";
 import {AdvertisementService} from "../../services/advertisement.service";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
+import {EventService} from "../../services/event.service";
+import {Event} from "../../Event";
 
 @Component({
   selector: 'app-new-ad',
@@ -12,10 +14,11 @@ import {CookieService} from "ngx-cookie-service";
 export class NewAdComponent implements OnInit {
   ad: Ad;
   ads!: Ad[];
+  events!: Event[];
 
   thisBusiness : number;
 
-  constructor(private router : Router, private cookieService : CookieService, private adService : AdvertisementService) {
+  constructor(private router : Router, private cookieService : CookieService, private adService : AdvertisementService, private eventService : EventService) {
     this.ad = new Ad();
 
     this.thisBusiness = parseInt(<string>localStorage.getItem("goclubbingBusinessID"));
@@ -24,6 +27,7 @@ export class NewAdComponent implements OnInit {
   ngOnInit(): void {
     if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
       this.getAds();
+      this.getMyEvents();
     } else{
       this.router.navigate(["/login"]);
     }
@@ -31,6 +35,21 @@ export class NewAdComponent implements OnInit {
 
   getAds() : void{
     this.adService.getAdvertisements().subscribe(ads => this.ads = ads);
+  }
+
+  getMyEvents() : void{
+    this.eventService.getEvents().subscribe(events => {
+      events.map(ev => {
+        if(ev.business==this.thisBusiness){
+          console.log("SIM");
+          if(this.events)
+            this.events.push(ev);
+          else
+            this.events = [ev];
+          console.log(this.events);
+        }
+      });
+    });
   }
 
 

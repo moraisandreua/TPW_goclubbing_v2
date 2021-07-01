@@ -3,6 +3,7 @@ import { Event } from "../Event";
 import { Observable } from "rxjs/internal/Observable";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import {Event_Type} from "../Event_Type";
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,10 @@ export class EventService {
       headers : new HttpHeaders({'Content-Type': 'application/json', 'Authorization':"Token " + this.cookieService.get("goclubbingLoginCookie")})
     }
     return this.http.delete<Event>(url, httpOptions);
+  }
+
+  getEventTypes() : Observable<Event_Type[]>{
+    const url = this.baseURL + 'api/events/types';
+    return this.http.get<Event_Type[]>(url)
   }
 }

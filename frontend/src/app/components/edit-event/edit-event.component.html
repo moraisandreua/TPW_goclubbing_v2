@@ -20,11 +20,9 @@
     </div>
     <div class="form-group">
       <label for="type">Type:  </label>
-      <input type="text" id="type" name="type" placeholder="{{event.type}}" [(ngModel)]="event.type"> <!-- TODO : Show these names insetad of numbers-->
-      <!--<select name="type" id="type">
-        <option *ngFor="let type of types" value="volvo">Volvo</option> TODO : create type service and get types
-        <option value="type.id">{{type.name}}</option>
-      </select>-->
+      <select name="type" id="type" [(ngModel)]="event.type">
+        <option *ngFor="let type of types" value="{{type.id}}">{{type.name}}</option>
+      </select>
 
       <label for="theme">Theme:  </label>
       <input type="text" id="theme" name="theme" placeholder="{{event.theme}}" [(ngModel)]="event.theme">

@@ -3,6 +3,7 @@ import {Event} from "../../Event";
 import {EventService} from "../../services/event.service";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
+import {Event_Type} from "../../Event_Type";
 
 @Component({
   selector: 'app-new-event',
@@ -11,6 +12,7 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class NewEventComponent implements OnInit {
   event: Event;
+  types!: Event_Type[];
 
   thisBusiness!: number;
 
@@ -20,9 +22,15 @@ export class NewEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.cookieService.get("goclubbingLoginCookie") == "" ) {
+    if(this.cookieService.get("goclubbingLoginCookie") != "" ) {
+      this.getTypes();
+    } else{
       this.router.navigate(["/login"]);
     }
+  }
+
+  getTypes() : void{
+    this.eventService.getEventTypes().subscribe(types => this.types = types);
   }
 
   save(e : Event) : void{
